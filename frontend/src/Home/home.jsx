@@ -33,14 +33,14 @@ function Home() {
           </p>
 
           <div className="mt-6 flex flex-wrap justify-center gap-6 sm:gap-8 text-4xl sm:text-5xl md:text-6xl">
-            <SiHtml5 title="HTML" className="text-orange-600 hover:scale-110 transition-transform duration-300" />
-            <SiTailwindcss title="Tailwind CSS" className="text-cyan-400 hover:scale-110 transition-transform duration-300" />
-            <SiJavascript title="JavaScript" className="text-yellow-400 hover:scale-110 transition-transform duration-300" />
-            <SiReact title="React" className="text-cyan-300 hover:scale-110 transition-transform duration-300" />
-            <SiNodedotjs title="Node.js" className="text-green-600 hover:scale-110 transition-transform duration-300" />
-            <SiFlutter title="Flutter" className="text-sky-400 hover:scale-110 transition-transform duration-300" />
-            <SiMongodb title="MongoDB" className="text-green-500 hover:scale-110 transition-transform duration-300" />
-            <SiSpringboot title="Spring Boot" className="text-green-700 hover:scale-110 transition-transform duration-300" />
+            <SiHtml5 title="HTML" className="text-orange-600 hover:scale-110 animate-pulse transition-transform duration-300" />
+            <SiTailwindcss title="Tailwind CSS" className="text-cyan-400 hover:scale-110 animate-pulse transition-transform duration-300" />
+            <SiJavascript title="JavaScript" className="text-yellow-400 hover:scale-110 animate-pulse transition-transform duration-300" />
+            <SiReact title="React" className="text-cyan-300 hover:scale-110 animate-pulse transition-transform duration-300" />
+            <SiNodedotjs title="Node.js" className="text-green-600 hover:scale-110 animate-pulse transition-transform duration-300" />
+            <SiFlutter title="Flutter" className="text-sky-400 hover:scale-110 animate-pulse transition-transform duration-300" />
+            <SiMongodb title="MongoDB" className="text-green-500 hover:scale-110 animate-pulse transition-transform duration-300" />
+            <SiSpringboot title="Spring Boot" className="text-green-700 hover:scale-110 animate-pulse transition-transform duration-300" />
           </div>
         </div>
       </section>
