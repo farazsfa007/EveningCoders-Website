@@ -1,12 +1,12 @@
-import Navbar from './Navbar/navbar';
-import React from 'react';
+import Home from "./Home/home.jsx";
+import React from "react";
 
 function App() {
   return (
     <div>
-      <Navbar/>
+      <Home />
     </div>
   );
 }
 
-export default App
+export default App;
