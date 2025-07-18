@@ -1,5 +1,6 @@
 import React from "react";
 import Navbar from "../Navbar/navbar";
+import Feature from "../Feature/feature";
 import {
   SiHtml5,
   SiTailwindcss,
@@ -88,6 +89,7 @@ function Home({ darkMode, setDarkMode }) {
           </div>
         </div>
       </section>
+      <Feature/>
     </div>
   );
 }
