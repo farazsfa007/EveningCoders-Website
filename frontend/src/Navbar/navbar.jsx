@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useState } from "react"; // 1. Import useState
 import { GiHamburgerMenu } from "react-icons/gi";
+import { RxCross2 } from "react-icons/rx";
 import { FaSun, FaMoon } from "react-icons/fa";
 import logoImage from "../assets/logo image.jpg";
 
+
 function Navbar({ darkMode, setDarkMode }) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const navItems = ["features", "pricing", "services", "roadmap"];
+
   return (
-    <nav className="bg-[#0e1119] dark:bg-gray-800 py-6">
-      <div className="container mx-auto px-4 flex flex-wrap items-center justify-between gap-y-4 relative">
+    <nav className="bg-[#0e1119] dark:bg-gray-800 py-6 relative">
+      <div className="container mx-auto px-4 flex flex-wrap items-center justify-between gap-y-4">
         <div className="flex items-center space-x-4">
           <a href="/" aria-label="Home" className="flex items-center space-x-2">
             <img
@@ -21,7 +27,7 @@ function Navbar({ darkMode, setDarkMode }) {
         </div>
 
         <div className="absolute left-1/2 transform -translate-x-1/2 hidden lg:flex items-center gap-6 xl:gap-10">
-          {["features", "pricing", "services", "roadmap"].map((item) => (
+          {navItems.map((item) => (
             <a
               key={item}
               href={`#${item}`}
@@ -39,7 +45,6 @@ function Navbar({ darkMode, setDarkMode }) {
           >
             Contact Us
           </a>
-
           <button
             onClick={() => setDarkMode(!darkMode)}
             className="p-2 rounded-full text-lg bg-white dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition"
@@ -51,7 +56,6 @@ function Navbar({ darkMode, setDarkMode }) {
               <FaMoon className="text-blue-400" />
             )}
           </button>
-
           <div className="px-2 pt-2">
             <button className="relative w-full inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
               <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
@@ -74,12 +78,39 @@ function Navbar({ darkMode, setDarkMode }) {
               <FaMoon className="text-blue-400" />
             )}
           </button>
-
-          <button className="text-white focus:outline-none">
-            <GiHamburgerMenu size={24} />
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="text-white focus:outline-none"
+            aria-label="Toggle menu"
+          >
+            {isMenuOpen ? <RxCross2 size={24} /> : <GiHamburgerMenu size={24} />}
           </button>
         </div>
       </div>
+
+      {isMenuOpen && (
+        <div className="lg:hidden w-full absolute top-full left-0 bg-[#0e1119] dark:bg-gray-800 z-20">
+          <div className="container mx-auto px-8 py-4 flex flex-col items-center gap-y-4">
+            {navItems.map((item) => (
+              <a
+                key={item}
+                href={`#${item}`}
+                onClick={() => setIsMenuOpen(false)} 
+                className="text-gray-300 hover:text-white uppercase text-sm font-medium tracking-wider"
+              >
+                {item.charAt(0).toUpperCase() + item.slice(1)}
+              </a>
+            ))}
+            <a
+              href="#contact"
+              onClick={() => setIsMenuOpen(false)}
+              className="text-gray-300 hover:text-white uppercase text-sm font-medium tracking-wider"
+            >
+              Contact Us
+            </a>
+          </div>
+        </div>
+      )}
     </nav>
   );
 }
