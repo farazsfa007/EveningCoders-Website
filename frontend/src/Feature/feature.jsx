@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   FaPaintBrush,
   FaLightbulb,
@@ -65,12 +66,10 @@ function Feature() {
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-0">
         <div
           className="absolute inset-0 bg-[length:20px_100%] bg-[linear-gradient(to_right,rgba(0,0,0,0.05)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,rgba(255,255,255,0.1)_1px,transparent_1px)]"
-          style={{
-            clipPath: "polygon(0 0, 100% 5%, 100% 100%, 0% 100%)",
-          }}
-        ></div>
-        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 rounded-full blur-3xl opacity-30 animate-pulse"></div>
-        <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 rounded-full blur-2xl opacity-30 animate-ping"></div>
+          style={{ clipPath: "polygon(0 0, 100% 5%, 100% 100%, 0% 100%)" }}
+        />
+        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 rounded-full blur-3xl opacity-30 animate-pulse" />
+        <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 rounded-full blur-2xl opacity-30 animate-ping" />
       </div>
 
       <div className="relative z-10">
@@ -104,8 +103,8 @@ function Feature() {
                 {feature.description}
               </p>
 
-              <a
-                href="#"
+              <Link
+                to="/"
                 className="inline-flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300
                 font-semibold text-base transition-colors duration-300
                 group-hover:translate-x-1"
@@ -123,9 +122,9 @@ function Feature() {
                     strokeLinejoin="round"
                     strokeWidth="2"
                     d="M9 5l7 7-7 7"
-                  ></path>
+                  />
                 </svg>
-              </a>
+              </Link>
             </div>
           ))}
         </div>

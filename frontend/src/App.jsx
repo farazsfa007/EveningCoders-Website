@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./Navbar/navbar";
 import Home from "./Home/home";
+import Feature from "./Feature/feature.jsx";
 
 function App() {
   const [darkMode, setDarkMode] = useState(() => {
@@ -20,10 +22,19 @@ function App() {
   }, [darkMode]);
 
   return (
-    <div className="min-h-screen bg-white dark:bg-[#0e1119] text-black dark:text-white transition-colors duration-300">
-      <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
-      <Home darkMode={darkMode} setDarkMode={setDarkMode} />
-    </div>
+    <Router>
+      <div className="min-h-screen bg-white dark:bg-[#0e1119] text-black dark:text-white transition-colors duration-300">
+        <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
+
+        <Routes>
+          <Route
+            path="/"
+            element={<Home darkMode={darkMode} setDarkMode={setDarkMode} />}
+          />
+          <Route path="/feature" element={<Feature />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

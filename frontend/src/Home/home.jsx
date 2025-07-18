@@ -1,6 +1,4 @@
 import React from "react";
-import Navbar from "../Navbar/navbar";
-import Feature from "../Feature/feature";
 import {
   SiHtml5,
   SiTailwindcss,
@@ -12,18 +10,14 @@ import {
   SiSpringboot,
 } from "react-icons/si";
 
-function Home({ darkMode, setDarkMode }) {
+function Home() {
   return (
     <div className="relative min-h-screen bg-white dark:bg-blue-800 text-black dark:text-white transition-colors duration-300 overflow-hidden">
-      <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
-
       <div className="absolute inset-0 z-0 pointer-events-none">
         <div className="w-full h-full relative">
           <div
             className="absolute inset-0 bg-[length:20px_100%] bg-[linear-gradient(to_right,rgba(0,0,0,0.05)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,rgba(255,255,255,0.1)_1px,transparent_1px)]"
-            style={{
-              clipPath: "polygon(0 0, 100% 5%, 100% 100%, 0% 100%)",
-            }}
+            style={{ clipPath: "polygon(0 0, 100% 5%, 100% 100%, 0% 100%)" }}
           />
 
           <div className="absolute top-0 left-0 w-full h-full">
@@ -87,8 +81,6 @@ function Home({ darkMode, setDarkMode }) {
           </div>
         </div>
       </section>
-
-      <Feature />
     </div>
   );
 }
