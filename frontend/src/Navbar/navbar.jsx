@@ -1,4 +1,4 @@
-import React, { useState } from "react"; // 1. Import useState
+import React, { useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { RxCross2 } from "react-icons/rx";
 import { FaSun, FaMoon } from "react-icons/fa";
