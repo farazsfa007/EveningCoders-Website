@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import Home from "./Home/home.jsx";
+import Navbar from "./Navbar/navbar";
+import Home from "./Home/home";
 
 function App() {
   const [darkMode, setDarkMode] = useState(() => {
-    // Default to dark if no theme is set
     const stored = localStorage.getItem("theme");
     return stored ? stored === "dark" : true;
   });
@@ -20,7 +20,8 @@ function App() {
   }, [darkMode]);
 
   return (
-    <div className="min-h-screen transition-colors duration-300">
+    <div className="min-h-screen bg-white dark:bg-[#0e1119] text-black dark:text-white transition-colors duration-300">
+      <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
       <Home darkMode={darkMode} setDarkMode={setDarkMode} />
     </div>
   );

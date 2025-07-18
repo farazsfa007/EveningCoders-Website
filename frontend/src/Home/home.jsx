@@ -15,6 +15,8 @@ import {
 function Home({ darkMode, setDarkMode }) {
   return (
     <div className="relative min-h-screen bg-white dark:bg-blue-800 text-black dark:text-white transition-colors duration-300 overflow-hidden">
+      <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
+
       <div className="absolute inset-0 z-0 pointer-events-none">
         <div className="w-full h-full relative">
           <div
@@ -22,22 +24,18 @@ function Home({ darkMode, setDarkMode }) {
             style={{
               clipPath: "polygon(0 0, 100% 5%, 100% 100%, 0% 100%)",
             }}
-          ></div>
+          />
 
           <div className="absolute top-0 left-0 w-full h-full">
-            <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 rounded-full blur-3xl opacity-30 animate-pulse"></div>
-            <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 rounded-full blur-2xl opacity-30 animate-ping"></div>
+            <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 rounded-full blur-3xl opacity-30 animate-pulse" />
+            <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 rounded-full blur-2xl opacity-30 animate-ping" />
           </div>
         </div>
       </div>
 
-      <div className="relative z-20">
-        <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
-      </div>
-
-      <section className="relative z-10 flex flex-col items-center justify-start text-center px-4 pt-32 md:pt-40 h-[calc(100vh-80px)]">
+      <section className="relative z-10 flex flex-col items-center justify-start text-center px-4 pt-40 md:pt-56 lg:pt-64 h-[calc(100vh-80px)]">
         <div className="max-w-3xl w-full">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-snug md:leading-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-snug md:leading-tight animate-bounce [animation-duration:2.5s]">
             Explore the Possibilities of Digital Growth with Eve
           </h1>
 
@@ -89,7 +87,8 @@ function Home({ darkMode, setDarkMode }) {
           </div>
         </div>
       </section>
-      <Feature/>
+
+      <Feature />
     </div>
   );
 }
