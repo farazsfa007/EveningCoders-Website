@@ -10,8 +10,8 @@ function Navbar({ darkMode, setDarkMode }) {
   const navItems = ["features", "pricing", "services", "roadmap"];
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 bg-black/70 dark:bg-gray-800/60 py-4 shadow-md transition-colors duration-300 backdrop-blur-sm">
-      <div className="container mx-auto px-4 flex flex-wrap items-center justify-between gap-y-4">
+    <nav className="fixed top-0 left-0 w-full z-50 bg-black/70 dark:bg-gray-800/50 py-4 shadow-md transition-colors duration-300 backdrop-blur-sm">
+      <div className="container mx-auto px-1 flex flex-wrap items-center justify-between gap-y-4">
         <div className="flex items-center space-x-4">
           <a href="/" aria-label="Home" className="flex items-center space-x-2">
             <img
