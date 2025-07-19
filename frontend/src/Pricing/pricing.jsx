@@ -47,7 +47,7 @@ const Pricing = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="text-center mb-16">
-          <p className="text-lg font-semibold text-purple-400 uppercase tracking-wider">
+          <p className="text-sm font-semibold text-purple-400 uppercase tracking-wider">
             Getting Started with Evening Coders
           </p>
           <h1 className="text-4xl md:text-5xl font-extrabold mt-2 tracking-tight">
