@@ -37,7 +37,7 @@ function Home({ darkMode, setDarkMode }) {
     <div className="relative min-h-screen bg-white dark:bg-blue-800 text-black dark:text-white transition-colors duration-300 overflow-hidden">
       <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
 
-      <div className="absolute inset-0 z-0 pointer-events-none">
+      <div id="home" className="absolute inset-0 z-0 pointer-events-none">
         <div className="w-full h-full relative">
           <div
             className="absolute inset-0 bg-[length:20px_100%] bg-[linear-gradient(to_right,rgba(0,0,0,0.05)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,rgba(255,255,255,0.1)_1px,transparent_1px)]"
@@ -126,7 +126,10 @@ function Home({ darkMode, setDarkMode }) {
         </div>
       </motion.section>
 
-      <Feature />
+      <section id="features" className="scroll-mt-24">
+        <Feature />
+      </section>
+
     </div>
   );
 }

@@ -77,7 +77,7 @@ const scaleRotate = {
 
 function Feature() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-gray-50 to-white dark:from-blue-800 dark:to-blue-700 py-16 md:py-24 px-4 sm:px-6 lg:px-20 font-inter">
+    <section id="features" className="relative overflow-hidden bg-gradient-to-br from-gray-50 to-white dark:from-blue-800 dark:to-blue-700 py-16 md:py-24 px-4 sm:px-6 lg:px-20 font-inter">
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-0">
         <div
           className="absolute inset-0 bg-[length:20px_100%] bg-[linear-gradient(to_right,rgba(0,0,0,0.05)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,rgba(255,255,255,0.1)_1px,transparent_1px)]"
