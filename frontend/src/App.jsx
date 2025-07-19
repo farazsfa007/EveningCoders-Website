@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar/navbar";
 import Home from "./Home/home";
+import Pricing from "./Pricing/pricing";
+import Services from "./Services/services"
+import Roadmap from "./Roadmap/roadmap"
 
 function App() {
   const [darkMode, setDarkMode] = useState(() => {
@@ -23,6 +26,9 @@ function App() {
     <div className="min-h-screen bg-white dark:bg-[#0e1119] text-black dark:text-white transition-colors duration-300">
       <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
       <Home darkMode={darkMode} setDarkMode={setDarkMode} />
+      <Pricing darkMode={darkMode} setDarkMode={setDarkMode} />
+      <Services darkMode={darkMode} setDarkMode={setDarkMode} />
+      <Roadmap darkMode={darkMode} setDarkMode={setDarkMode} />
     </div>
   );
 }
