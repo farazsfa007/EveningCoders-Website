@@ -77,16 +77,19 @@ const scaleRotate = {
 
 function Feature() {
   return (
-    <section id="features" className="relative overflow-hidden bg-gradient-to-br from-gray-50 to-white dark:from-blue-800 dark:to-blue-700 py-16 md:py-24 px-4 sm:px-6 lg:px-20 font-inter">
+    <section
+      id="features"
+      className="relative overflow-hidden bg-gradient-to-br from-gray-50 to-white dark:from-black dark:to-gray-900 py-16 md:py-24 px-4 sm:px-6 lg:px-20 font-inter"
+    >
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-0">
         <div
-          className="absolute inset-0 bg-[length:20px_100%] bg-[linear-gradient(to_right,rgba(0,0,0,0.05)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,rgba(255,255,255,0.1)_1px,transparent_1px)]"
+          className="absolute inset-0 bg-[length:20px_20px] bg-[linear-gradient(to_right,rgba(0,0,0,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.05)_1px,transparent_1px)] dark:bg-none"
           style={{
             clipPath: "polygon(0 0, 100% 5%, 100% 100%, 0% 100%)",
           }}
         />
-        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 rounded-full blur-3xl opacity-30 animate-pulse" />
-        <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 rounded-full blur-2xl opacity-30 animate-ping" />
+
+        <div className="hidden dark:block absolute inset-0 bg-[length:20px_20px] bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)]" />
       </div>
 
       <div className="relative z-10">
@@ -112,7 +115,7 @@ function Feature() {
           </motion.p>
         </motion.div>
 
-        {/* Cards */}
+        {/* Feature Cards */}
         <motion.div
           className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
           initial="hidden"
@@ -123,7 +126,7 @@ function Feature() {
           {features.map((feature, index) => (
             <motion.div
               key={index}
-              className="group bg-white dark:bg-gray-800 p-10 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 ease-in-out border border-gray-200 dark:border-gray-700 flex flex-col items-center text-center"
+              className="group bg-white dark:bg-[#1e1e2f] p-10 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 ease-in-out border border-gray-200 dark:border-gray-700 flex flex-col items-center text-center"
               variants={fadeUp}
               whileHover={{ scale: 1.04 }}
             >

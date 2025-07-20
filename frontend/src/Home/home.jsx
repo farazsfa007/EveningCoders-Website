@@ -34,21 +34,19 @@ const containerVariants = {
 
 function Home({ darkMode, setDarkMode }) {
   return (
-    <div className="relative min-h-screen bg-white dark:bg-blue-800 text-black dark:text-white transition-colors duration-300 overflow-hidden">
+    <div className="relative min-h-screen bg-white dark:bg-black text-black dark:text-white transition-colors duration-300 overflow-hidden">
       <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
 
       <div id="home" className="absolute inset-0 z-0 pointer-events-none">
         <div className="w-full h-full relative">
+          {/* Grid Lines */}
           <div
             className="absolute inset-0 bg-[length:20px_100%] bg-[linear-gradient(to_right,rgba(0,0,0,0.05)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,rgba(255,255,255,0.1)_1px,transparent_1px)]"
             style={{
               clipPath: "polygon(0 0, 100% 5%, 100% 100%, 0% 100%)",
             }}
           />
-          <div className="absolute top-0 left-0 w-full h-full">
-            <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 rounded-full blur-3xl opacity-30 animate-pulse" />
-            <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 rounded-full blur-2xl opacity-30 animate-ping" />
-          </div>
+          <div className="absolute inset-0 bg-[length:100%_20px] bg-[linear-gradient(to_bottom,rgba(0,0,0,0.05)_1px,transparent_1px)] dark:bg-[linear-gradient(to_bottom,rgba(255,255,255,0.1)_1px,transparent_1px)]" />
         </div>
       </div>
 
@@ -74,14 +72,14 @@ function Home({ darkMode, setDarkMode }) {
             custom={2}
           >
             Unleash the power of the digital world. Upgrade your business with{" "}
-            <motion.strong
+            <motion.span
               className="text-black dark:text-white font-bold inline-block"
-              animate={{ scale: [1, 1.1, 1] }}
+              animate={{ y: [0, -5, 0] }}
               transition={{ repeat: Infinity, duration: 2 }}
             >
-              Evening Coders
-            </motion.strong>
-            , the best web development platform.
+              evening coders
+            </motion.span>{" "}
+            the best web development platform.
           </motion.p>
 
           <motion.p
@@ -93,7 +91,7 @@ function Home({ darkMode, setDarkMode }) {
           </motion.p>
 
           <motion.div
-            className="mt-6 flex flex-wrap justify-center gap-6 sm:gap-8 text-4xl sm:text-5xl md:text-6xl"
+            className="mt-6 flex flex-wrap justify-center gap-6 sm:gap-8 animate-pulse text-4xl sm:text-5xl md:text-6xl"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
@@ -129,7 +127,6 @@ function Home({ darkMode, setDarkMode }) {
       <section id="features" className="scroll-mt-24">
         <Feature />
       </section>
-
     </div>
   );
 }

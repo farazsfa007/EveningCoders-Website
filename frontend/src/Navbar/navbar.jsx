@@ -6,9 +6,11 @@ import { FaSun, FaMoon } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 
 import logoImage from "../assets/logo image.jpg";
+import ContactFormModal from "../ContactForm/ContactFormModal";
 
 function Navbar({ darkMode, setDarkMode }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
   const navItems = ["home", "features", "pricing", "services", "roadmap"];
 
@@ -42,7 +44,7 @@ function Navbar({ darkMode, setDarkMode }) {
               className="w-10 h-10 rounded-full object-cover"
             />
             <motion.span
-              className="text-2xl font-semibold whitespace-nowrap text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-white to-blue-400 drop-shadow-[0_0_8px_#3B82F6] animate-glow"
+              className="text-2xl font-semibold whitespace-nowrap animate-slow-bounce text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-white to-blue-400 drop-shadow-[0_0_8px_#3B82F6] animate-glow"
               whileHover={{ scale: 1.1 }}
               transition={{ type: "spring", stiffness: 200 }}
             >
@@ -70,13 +72,13 @@ function Navbar({ darkMode, setDarkMode }) {
         </div>
 
         <div className="hidden lg:flex items-center gap-6">
-          <motion.a
-            href="#contact"
+          <motion.button
+            onClick={() => setIsContactModalOpen(true)}
             className="text-gray-200 hover:text-white uppercase text-sm font-medium tracking-wider transition-colors duration-300"
             whileHover={{ scale: 1.1 }}
           >
             Contact Us
-          </motion.a>
+          </motion.button>
 
           <button
             onClick={() => setDarkMode(!darkMode)}
@@ -121,11 +123,7 @@ function Navbar({ darkMode, setDarkMode }) {
             className="text-white focus:outline-none"
             aria-label="Toggle menu"
           >
-            {isMenuOpen ? (
-              <RxCross2 size={24} />
-            ) : (
-              <GiHamburgerMenu size={24} />
-            )}
+            {isMenuOpen ? <RxCross2 size={24} /> : <GiHamburgerMenu size={24} />}
           </button>
         </div>
       </div>
@@ -158,14 +156,16 @@ function Navbar({ darkMode, setDarkMode }) {
                 </motion.a>
               ))}
 
-              <motion.a
-                href="#contact"
-                onClick={() => setIsMenuOpen(false)}
+              <motion.button
+                onClick={() => {
+                  setIsContactModalOpen(true);
+                  setIsMenuOpen(false);
+                }}
                 className="text-gray-200 hover:text-white uppercase text-base font-medium tracking-wider transition-colors duration-300"
                 whileHover={{ scale: 1.05 }}
               >
                 Contact Us
-              </motion.a>
+              </motion.button>
 
               <motion.div whileHover={{ scale: 1.05 }} className="mt-4">
                 <button className="relative w-full inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none">
@@ -179,6 +179,12 @@ function Navbar({ darkMode, setDarkMode }) {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Contact Form Modal Component */}
+      <ContactFormModal
+        isOpen={isContactModalOpen}
+        onClose={() => setIsContactModalOpen(false)}
+      />
     </motion.nav>
   );
 }

@@ -4,7 +4,7 @@ import Home from "./Home/home";
 import Pricing from "./Pricing/pricing";
 import Services from "./Services/services"
 import Roadmap from "./Roadmap/roadmap"
-
+import MouseTrail from "./MouseTrail/MouseTrail";
 function App() {
   const [darkMode, setDarkMode] = useState(() => {
     const stored = localStorage.getItem("theme");
@@ -24,6 +24,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-[#0e1119] text-black dark:text-white transition-colors duration-300">
+      <MouseTrail />
       <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
       <Home darkMode={darkMode} setDarkMode={setDarkMode} />
       <Pricing darkMode={darkMode} setDarkMode={setDarkMode} />
