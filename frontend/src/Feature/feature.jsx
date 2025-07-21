@@ -81,6 +81,7 @@ function Feature() {
       id="features"
       className="relative overflow-hidden bg-gradient-to-br from-gray-50 to-white dark:from-black dark:to-gray-900 py-16 md:py-24 px-4 sm:px-6 lg:px-20 font-inter"
     >
+      {/* Background Patterns */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-0">
         <div
           className="absolute inset-0 bg-[length:20px_20px] bg-[linear-gradient(to_right,rgba(0,0,0,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.05)_1px,transparent_1px)] dark:bg-none"
@@ -88,7 +89,6 @@ function Feature() {
             clipPath: "polygon(0 0, 100% 5%, 100% 100%, 0% 100%)",
           }}
         />
-
         <div className="hidden dark:block absolute inset-0 bg-[length:20px_20px] bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)]" />
       </div>
 
@@ -126,12 +126,15 @@ function Feature() {
           {features.map((feature, index) => (
             <motion.div
               key={index}
-              className="group bg-white dark:bg-[#1e1e2f] p-10 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 ease-in-out border border-gray-200 dark:border-gray-700 flex flex-col items-center text-center"
+              className="group relative bg-white dark:bg-[#1e1e2f] p-10 rounded-3xl shadow-xl transition-all duration-500 ease-in-out border border-gray-200 dark:border-gray-700 flex flex-col items-center text-center"
               variants={fadeUp}
               whileHover={{ scale: 1.04 }}
             >
+              {/* Border Glow Overlay */}
+              <div className="absolute inset-0 rounded-3xl z-[-1] border-2 border-transparent group-hover:border-transparent group-hover:before:opacity-100 before:content-[''] before:absolute before:inset-[-2px] before:rounded-[inherit] before:z-[-1] before:opacity-0 before:transition-opacity before:duration-300 before:bg-gradient-to-r before:from-pink-400 before:via-purple-400 before:to-blue-400"></div>
+
               <motion.div
-                className="mb-6 p-4 rounded-full bg-blue-50 dark:bg-gray-700 group-hover:bg-blue-100 dark:group-hover:bg-gray-600 transition duration-300"
+                className="mb-6 p-4 rounded-full bg-blue-100 dark:bg-gray-700 group-hover:bg-indigo-50 dark:group-hover:bg-gray-600 transition duration-300"
                 variants={scaleRotate}
               >
                 <motion.div
