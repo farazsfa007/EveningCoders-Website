@@ -19,14 +19,14 @@ function ContactFormModal({ isOpen, onClose }) {
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 bg-black/70 backdrop-blur-md mt-100 flex justify-center items-center z-50 p-4"
+          className="fixed inset-0 bg-black/70 backdrop-blur-md flex justify-center items-center z-50 p-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose} 
         >
           <motion.div
-            className="relative bg-slate-900/96 backdrop-blur-xl border border-slate-700 rounded-2xl p-8 w-full max-w-md text-white shadow-2xl shadow-blue-500/20"
+            className="relative bg-slate-900/96 backdrop-blur-xl mt-150 border border-slate-700 rounded-2xl p-8 w-full max-w-md text-white shadow-2xl shadow-blue-500/20"
             initial={{ y: -50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 50, opacity: 0 }}
