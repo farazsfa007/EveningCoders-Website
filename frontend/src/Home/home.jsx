@@ -34,12 +34,12 @@ const containerVariants = {
 
 function Home({ darkMode, setDarkMode }) {
   return (
-    <div className="relative min-h-screen bg-white dark:bg-black text-black dark:text-white transition-colors duration-300 overflow-hidden">
-      <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
+    <div className="relative min-h-screen bg-white dark:bg-black text-black dark:text-white transition-colors duration-300">
 
-      <div id="home" className="absolute inset-0 z-0 pointer-events-none">
+      <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
+      
+      <div className="absolute inset-0 z-0 pointer-events-none">
         <div className="w-full h-full relative">
-          {/* Grid Lines */}
           <div
             className="absolute inset-0 bg-[length:20px_100%] bg-[linear-gradient(to_right,rgba(0,0,0,0.05)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,rgba(255,255,255,0.1)_1px,transparent_1px)]"
             style={{
@@ -51,6 +51,7 @@ function Home({ darkMode, setDarkMode }) {
       </div>
 
       <motion.section
+        id="home"
         className="relative z-10 flex flex-col items-center justify-start text-center px-4 pt-40 md:pt-56 lg:pt-64 h-[calc(100vh-80px)]"
         initial="hidden"
         whileInView="visible"
