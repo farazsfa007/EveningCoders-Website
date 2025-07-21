@@ -4,55 +4,95 @@ import { motion, AnimatePresence } from "framer-motion";
 import { RxCross2 } from "react-icons/rx";
 
 function ContactFormModal({ isOpen, onClose }) {
+  React.useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
   return (
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm flex justify-center items-center z-50"
+          className="fixed inset-0 bg-black/70 backdrop-blur-md mt-100 flex justify-center items-center z-50 p-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
+          onClick={onClose} 
         >
           <motion.div
-            // Added absolute positioning and transform for robust centering
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white/10 dark:bg-gray-800/30 border border-gray-400 rounded-2xl p-8 w-[90%] max-w-md text-white shadow-2xl"
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.8, opacity: 0 }}
-            transition={{ type: "spring", stiffness: 300 }}
+            className="relative bg-slate-900/96 backdrop-blur-xl border border-slate-700 rounded-2xl p-8 w-full max-w-md text-white shadow-2xl shadow-blue-500/20"
+            initial={{ y: -50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 50, opacity: 0 }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            onClick={(e) => e.stopPropagation()} 
           >
-            {/* Close Button */}
             <button
-              className="absolute top-3 right-3 text-white hover:text-red-400 transition"
+              className="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition-colors duration-300"
               onClick={onClose}
               aria-label="Close modal"
             >
               <RxCross2 size={24} />
             </button>
 
-            <h2 className="text-2xl font-semibold mb-6 text-center">Contact Us</h2>
-            <form className="flex flex-col gap-4">
-              <input
-                type="text"
-                placeholder="Your Name"
-                className="bg-transparent border border-white/40 rounded px-4 py-2 placeholder-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <input
-                type="email"
-                placeholder="Your Email"
-                className="bg-transparent border border-white/40 rounded px-4 py-2 placeholder-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <input
-                type="tel"
-                placeholder="Your Mobile"
-                className="bg-transparent border border-white/40 rounded px-4 py-2 placeholder-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <button
+            <div className="text-center">
+                <h2 className="text-3xl font-bold mb-2 bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text">
+                    Get in Touch
+                </h2>
+                <p className="text-gray-300 text-sm mb-8">We're excited to hear from you!</p>
+            </div>
+            
+            <form className="flex flex-col gap-y-6">
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
+                  Full Name
+                </label>
+                <input
+                  id="name"
+                  type="text"
+                  placeholder="John Doe"
+                  className="w-full bg-slate-800/50 border border-slate-600 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+                  Email Address
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  placeholder="you@example.com"
+                  className="w-full bg-slate-800/50 border border-slate-600 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300"
+                />
+              </div>
+              
+              <div>
+                <label htmlFor="mobile" className="block text-sm font-medium text-gray-300 mb-2">
+                  Mobile Number
+                </label>
+                <input
+                  id="mobile"
+                  type="tel"
+                  placeholder="+91 12345 67890"
+                  className="w-full bg-slate-800/50 border border-slate-600 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300"
+                />
+              </div>
+
+              <motion.button
                 type="submit"
-                className="mt-2 bg-blue-600 hover:bg-blue-700 transition rounded-full py-2 text-white font-semibold"
+                className="mt-4 w-full font-bold py-3 px-4 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg hover:shadow-blue-500/40 transition-all duration-300"
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
               >
                 Submit
-              </button>
+              </motion.button>
             </form>
           </motion.div>
         </motion.div>
