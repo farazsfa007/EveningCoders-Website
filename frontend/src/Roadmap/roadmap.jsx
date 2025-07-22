@@ -2,6 +2,10 @@
 import React from "react";
 import { motion } from "framer-motion";
 import EveLandingPage from "../EventFromPage/eventFormPage";
+import GurukulImg from "../assets/budha.png"
+import BooksImg from "../assets/books.png"
+import ConnectionImg from "../assets/connection.png"
+import GymImg from "../assets/gym.png"
 
 const roadmapItems = [
   {
@@ -9,7 +13,7 @@ const roadmapItems = [
     title: "Gurukul",
     description:
       "A comprehensive e-learning platform designed to provide a rich and interactive learning experience for students of all ages.",
-    image: "https://placehold.co/600x400/1a202c/e2e8f0?text=Gurukul+Image",
+    image: GurukulImg,
     delay: 0.2,
     status: "Completed",
   },
@@ -18,7 +22,7 @@ const roadmapItems = [
     title: "IIMS",
     description:
       "An Integrated Institute Management System to streamline academic and administrative processes for educational institutions.",
-    image: "https://placehold.co/600x400/1a202c/e2e8f0?text=IIMS+Image",
+    image: GymImg,
     delay: 0.4,
     status: "In Progress",
   },
@@ -27,7 +31,7 @@ const roadmapItems = [
     title: "App Builder",
     description:
       "A no-code/low-code platform enabling users to quickly build and deploy custom applications with intuitive drag-and-drop interfaces.",
-    image: "https://placehold.co/600x400/1a202c/e2e8f0?text=App+Builder+Image",
+    image: BooksImg,
     delay: 0.6,
     status: "Planned",
   },
@@ -37,7 +41,7 @@ const roadmapItems = [
     description:
       "Integrating advanced AI capabilities into our core services to enhance automation, personalization, and data analysis.",
     image:
-      "https://placehold.co/600x400/1a202c/e2e8f0?text=AI+Integration+Image",
+      ConnectionImg,
     delay: 0.8,
     status: "In Progress",
   },
@@ -134,13 +138,6 @@ function Roadmap({ darkMode }) {
                   src={item.image}
                   alt={item.title}
                   className="w-full h-full object-cover rounded-lg transition-transform duration-500 group-hover:scale-105"
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = `https://placehold.co/600x400/1a202c/e2e8f0?text=${item.title.replace(
-                      /\s/g,
-                      "+"
-                    )}+Image`;
-                  }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/30 opacity-70 z-0"></div>
               </div>
