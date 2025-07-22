@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import Navbar from "../Navbar/navbar";
 import Feature from "../Feature/feature";
 import {
   SiHtml5,
@@ -57,8 +56,6 @@ function Home({ darkMode, setDarkMode }) {
 
   return (
     <div className="relative min-h-screen bg-white dark:bg-black text-black dark:text-white transition-colors duration-300">
-      <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
-
       <div className="absolute inset-0 z-0 pointer-events-none">
         <div className="w-full h-full relative">
           <div
@@ -136,7 +133,9 @@ function Home({ darkMode, setDarkMode }) {
                 whileHover={{ scale: 1.2, rotate: 5 }}
                 transition={{ type: "spring", stiffness: 200 }}
               >
-                <Icon className={`${color} transition-transform duration-300`} />
+                <Icon
+                  className={`${color} transition-transform duration-300`}
+                />
               </motion.div>
             ))}
           </motion.div>
@@ -150,38 +149,53 @@ function Home({ darkMode, setDarkMode }) {
             Evening Coders <br /> for Seamless <br /> Digital Presence
           </h2>
           <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-8 max-w-md">
-            With smart automation and top-notch security, it's the perfect solution for businesses looking to work smarter.
+            With smart automation and top-notch security, it's the perfect
+            solution for businesses looking to work smarter.
           </p>
           <div className="space-y-6">
-            {["Seamless Integration", "Smart Automation", "Top-notch Security"].map((text, index) => (
+            {[
+              "Seamless Integration",
+              "Smart Automation",
+              "Top-notch Security",
+            ].map((text, index) => (
               <div key={index} className="flex items-start space-x-4">
                 <FaCheckCircle className="text-purple-500 text-xl mt-1" />
                 <div>
-                  <h4 className="text-lg font-semibold text-black dark:text-white">{text}</h4>
+                  <h4 className="text-lg font-semibold text-black dark:text-white">
+                    {text}
+                  </h4>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
-                    With smart automation and top-notch security, it's the perfect solution for businesses looking to work smarter.
+                    With smart automation and top-notch security, it's the
+                    perfect solution for businesses looking to work smarter.
                   </p>
                 </div>
               </div>
             ))}
           </div>
-          <button className="mt-10 px-6 py-3 rounded-xl font-semibold bg-black text-white dark:bg-white dark:text-black hover:opacity-90 transition border-2 border-transparent hover:border-purple-400">
+          <a
+            href="https://api.whatsapp.com/message/V6NFQJ3SZEPZK1"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block mt-10 px-6 py-3 rounded-xl font-semibold bg-black text-white dark:bg-white dark:text-black hover:opacity-90 transition border-2 border-transparent hover:border-purple-400"
+          >
             GET IN TOUCH
-          </button>
+          </a>
         </div>
 
         <div className="flex-1 relative w-full h-[400px] sm:h-[500px] flex items-center justify-center">
           <div className="relative w-[300px] h-[300px]" ref={orbitRef}>
             <div className="absolute w-full h-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-              {["🧑‍💻", "💡", "🛠️", "📊", "🧠", "🔐", "⚙️", "🚀"].map((icon, i) => (
-                <div
-                  key={i}
-                  className="orbit-icon absolute text-3xl"
-                  style={{ top: "50%", left: "50%" }}
-                >
-                  {icon}
-                </div>
-              ))}
+              {["🧑‍💻", "💡", "🛠️", "📊", "🧠", "🔐", "⚙️", "🚀"].map(
+                (icon, i) => (
+                  <div
+                    key={i}
+                    className="orbit-icon absolute text-3xl"
+                    style={{ top: "50%", left: "50%" }}
+                  >
+                    {icon}
+                  </div>
+                )
+              )}
             </div>
             <div className="absolute top-1/2 left-1/2 w-24 h-24 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center shadow-2xl border-4 border-white text-white font-extrabold text-2xl">
               EC
