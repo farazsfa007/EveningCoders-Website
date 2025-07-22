@@ -23,6 +23,15 @@ function Navbar({ darkMode, setDarkMode }) {
     }),
   };
 
+  const handleSmoothScroll = (id) => {
+    const target = document.getElementById(id);
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      window.location.hash = `#${id}`; // fallback
+    }
+  };
+
   return (
     <motion.nav
       className="fixed top-0 left-0 w-full z-50 bg-black/70 dark:bg-gray-800/50 py-4 shadow-md transition-colors duration-300 backdrop-blur-sm"
@@ -53,6 +62,7 @@ function Navbar({ darkMode, setDarkMode }) {
           </a>
         </motion.div>
 
+        {/* Desktop Navigation */}
         <div className="absolute left-1/2 transform -translate-x-1/2 hidden lg:flex items-center gap-6 xl:gap-10">
           {navItems.map((item, index) => (
             <motion.a
@@ -105,6 +115,7 @@ function Navbar({ darkMode, setDarkMode }) {
           </motion.div>
         </div>
 
+        {/* Mobile menu toggle */}
         <div className="flex lg:hidden items-center gap-4">
           <button
             onClick={() => setDarkMode(!darkMode)}
@@ -128,6 +139,7 @@ function Navbar({ darkMode, setDarkMode }) {
         </div>
       </div>
 
+      {/* Mobile Menu */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
@@ -140,10 +152,12 @@ function Navbar({ darkMode, setDarkMode }) {
           >
             <div className="container mx-auto px-8 flex flex-col items-center gap-y-4">
               {navItems.map((item, i) => (
-                <motion.a
+                <motion.button
                   key={item}
-                  href={`#${item}`}
-                  onClick={() => setIsMenuOpen(false)}
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    setTimeout(() => handleSmoothScroll(item), 100);
+                  }}
                   className="text-gray-200 hover:text-white uppercase text-base font-medium tracking-wider transition-colors duration-300"
                   variants={navLinkVariants}
                   initial="hidden"
@@ -153,7 +167,7 @@ function Navbar({ darkMode, setDarkMode }) {
                   transition={{ duration: 0.2 }}
                 >
                   {item.charAt(0).toUpperCase() + item.slice(1)}
-                </motion.a>
+                </motion.button>
               ))}
 
               <motion.button
@@ -180,7 +194,6 @@ function Navbar({ darkMode, setDarkMode }) {
         )}
       </AnimatePresence>
 
-      {/* Contact Form Modal Component */}
       <ContactFormModal
         isOpen={isContactModalOpen}
         onClose={() => setIsContactModalOpen(false)}
