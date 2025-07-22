@@ -7,6 +7,7 @@ const Home = lazy(() => import("./Home/home"));
 const Pricing = lazy(() => import("./Pricing/pricing"));
 const Services = lazy(() => import("./Services/services"));
 const Roadmap = lazy(() => import("./Roadmap/roadmap"));
+const Footer = lazy(() => import("./Footer/footer"));
 
 function App() {
   const [darkMode, setDarkMode] = useState(() => {
@@ -35,6 +36,7 @@ function App() {
         <Pricing darkMode={darkMode} setDarkMode={setDarkMode} />
         <Services darkMode={darkMode} setDarkMode={setDarkMode} />
         <Roadmap darkMode={darkMode} setDarkMode={setDarkMode} />
+        <Footer darkMode={darkMode} setDarkMode={setDarkMode} />
       </Suspense>
     </div>
   );
