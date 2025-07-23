@@ -56,6 +56,7 @@ function Home({ darkMode, setDarkMode }) {
 
   return (
     <div className="relative min-h-screen bg-white dark:bg-black text-black dark:text-white transition-colors duration-300">
+      {/* Background grid */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <div className="w-full h-full relative">
           <div
@@ -68,6 +69,7 @@ function Home({ darkMode, setDarkMode }) {
         </div>
       </div>
 
+      {/* Hero Section */}
       <motion.section
         id="home"
         className="relative z-10 flex flex-col items-center justify-start text-center px-4 pt-40 pb-10"
@@ -142,23 +144,41 @@ function Home({ darkMode, setDarkMode }) {
         </div>
       </motion.section>
 
-      {/* Orbiting Section */}
-      <section className="relative z-10 px-6 py-20 md:py-32 flex flex-col lg:flex-row items-center justify-between gap-12 max-w-7xl mx-auto">
-        <div className="flex-1 text-left">
-          <h2 className="text-4xl sm:text-5xl font-bold leading-tight mb-6">
+      {/* Animated Orbiting Section */}
+      <motion.section
+        className="relative z-10 px-6 py-20 md:py-32 flex flex-col lg:flex-row items-center justify-between gap-12 max-w-7xl mx-auto"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={containerVariants}
+      >
+        <motion.div className="flex-1 text-left" variants={fadeUp}>
+          <motion.h2
+            className="text-4xl sm:text-5xl font-bold leading-tight mb-6"
+            variants={fadeUp}
+          >
             Evening Coders <br /> for Seamless <br /> Digital Presence
-          </h2>
-          <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-8 max-w-md">
+          </motion.h2>
+
+          <motion.p
+            className="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-8 max-w-md"
+            variants={fadeUp}
+          >
             With smart automation and top-notch security, it's the perfect
             solution for businesses looking to work smarter.
-          </p>
-          <div className="space-y-6">
+          </motion.p>
+
+          <motion.div className="space-y-6" variants={fadeUp}>
             {[
               "Seamless Integration",
               "Smart Automation",
               "Top-notch Security",
             ].map((text, index) => (
-              <div key={index} className="flex items-start space-x-4">
+              <motion.div
+                key={index}
+                className="flex items-start space-x-4"
+                variants={fadeUp}
+              >
                 <FaCheckCircle className="text-purple-500 text-xl mt-1" />
                 <div>
                   <h4 className="text-lg font-semibold text-black dark:text-white">
@@ -169,20 +189,25 @@ function Home({ darkMode, setDarkMode }) {
                     perfect solution for businesses looking to work smarter.
                   </p>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
-          <a
+          </motion.div>
+
+          <motion.a
             href="https://api.whatsapp.com/message/V6NFQJ3SZEPZK1"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block mt-10 px-6 py-3 rounded-xl font-semibold bg-black text-white dark:bg-white dark:text-black hover:opacity-90 transition border-2 border-transparent hover:border-purple-400"
+            variants={fadeUp}
           >
             GET IN TOUCH
-          </a>
-        </div>
+          </motion.a>
+        </motion.div>
 
-        <div className="flex-1 relative w-full h-[400px] sm:h-[500px] flex items-center justify-center">
+        <motion.div
+          className="flex-1 relative w-full h-[400px] sm:h-[500px] flex items-center justify-center"
+          variants={fadeUp}
+        >
           <div className="relative w-[300px] h-[300px]" ref={orbitRef}>
             <div className="absolute w-full h-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
               {["🧑‍💻", "💡", "🛠️", "📊", "🧠", "🔐", "⚙️", "🚀"].map(
@@ -201,9 +226,10 @@ function Home({ darkMode, setDarkMode }) {
               EC
             </div>
           </div>
-        </div>
-      </section>
+        </motion.div>
+      </motion.section>
 
+      {/* Features Section */}
       <section id="features" className="scroll-mt-24">
         <Feature />
       </section>
