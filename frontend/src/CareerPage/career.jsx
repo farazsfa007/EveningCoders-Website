@@ -2,6 +2,9 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { IoCheckmarkDoneCircleSharp } from "react-icons/io5";
+import { RxCross2 } from "react-icons/rx";
+import { db } from "../firebase";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 
 const qualificationYearMap = {
   BCA: ["3rd Year", "Completed"],
@@ -45,16 +48,13 @@ const CareerPage = () => {
 
   const [skills, setSkills] = useState([]);
   const [currentSkill, setCurrentSkill] = useState("");
-
   const [yearOptions, setYearOptions] = useState([]);
-
   const [errors, setErrors] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
     const options = qualificationYearMap[formData.qualification] || [];
     setYearOptions(options);
-
     if (formData.year && !options.includes(formData.year)) {
       setFormData((prev) => ({ ...prev, year: "" }));
     }
@@ -96,7 +96,6 @@ const CareerPage = () => {
 
     if (!formData.fullName.trim())
       tempErrors.fullName = "Full Name is required.";
-
     if (!formData.email.trim()) {
       tempErrors.email = "Email is required.";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
@@ -111,12 +110,9 @@ const CareerPage = () => {
 
     if (!formData.collegeName.trim())
       tempErrors.collegeName = "College Name is required.";
-
     if (!formData.qualification)
       tempErrors.qualification = "Qualification is required.";
-
     if (!formData.year) tempErrors.year = "Year is required.";
-
     if (skills.length === 0)
       tempErrors.skills = "At least one skill is required.";
 
@@ -140,14 +136,32 @@ const CareerPage = () => {
     return Object.keys(tempErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      console.log("Form Submitted Successfully:", { ...formData, skills });
-      setIsSubmitted(true);
-    } else {
+
+    if (!validateForm()) {
       console.log("Form validation failed.");
+      return;
     }
+
+    const submissionData = {
+      ...formData,
+      skills,
+      submittedAt: serverTimestamp(),
+    };
+
+    try {
+      await addDoc(collection(db, "internshipApplications"), submissionData);
+      console.log("Form Submitted to Firestore:", submissionData);
+      setIsSubmitted(true);
+    } catch (error) {
+      console.error("Error submitting to Firestore:", error);
+      alert("Failed to submit form. Please try again later.");
+    }
+  };
+
+  const handlePopupClose = () => {
+    setIsSubmitted(false);
   };
 
   const inputStyle =
@@ -163,8 +177,16 @@ const CareerPage = () => {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, type: "spring" }}
-          className="bg-white p-6 rounded-xl shadow-lg text-center max-w-sm dark:bg-gray-800" // Light mode default, dark mode override
+          className="relative bg-white p-6 rounded-xl shadow-lg text-center max-w-sm dark:bg-gray-800"
         >
+          <button
+            onClick={handlePopupClose}
+            className="absolute top-2 right-2 text-gray-500 hover:text-red-600 transition"
+            aria-label="Close"
+          >
+            <RxCross2 className="w-5 h-5" />
+          </button>
+
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
