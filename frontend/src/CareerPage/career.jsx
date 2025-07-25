@@ -212,7 +212,7 @@ const CareerPage = () => {
   return (
     <div
       id="career"
-      className="relative w-full min-h-screen pt-20 bg-gray-100 dark:bg-black overflow-hidden" // Changed pt-24 to pt-20, light mode background added
+      className="relative w-full min-h-screen pb-10 bg-gray-100 dark:bg-black overflow-hidden" // Changed pt-24 to pt-20, light mode background added
     >
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-0">
         <div
@@ -436,12 +436,16 @@ const CareerPage = () => {
             >
               <button
                 type="submit"
-                className="w-full md:w-auto px-10 py-3 text-sm font-bold text-white bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg hover:from-purple-700 hover:to-pink-700 focus:outline-none focus:ring-4 focus:ring-purple-400 transform hover:scale-105 transition-all duration-300"
+                className="w-full md:w-auto px-10 py-3 text-sm font-bold text-white bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg hover:from-purple-700 hover:to-pink-700 focus:outline-none focus:ring-4 focus:ring-purple-400 transform hover:scale-105 transition-all duration-300 mb-5"
               >
                 Apply Now
               </button>
             </motion.div>
-            <motion.div
+          </motion.form>
+        </div>
+        
+      </div>
+      <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.6 }}
@@ -455,9 +459,6 @@ const CareerPage = () => {
                 today and become part of something extraordinary.
               </p>
             </motion.div>
-          </motion.form>
-        </div>
-      </div>
     </div>
   );
 };
