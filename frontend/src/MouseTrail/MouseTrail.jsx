@@ -10,8 +10,6 @@ const MouseTrail = () => {
       setPosition({ x: e.clientX, y: e.clientY });
     };
 
-    // Only apply mousemove for devices with mouse input
-    // Consider if you want this for all devices or only larger screens
     if (window.innerWidth > 768) {
       window.addEventListener("mousemove", move);
     }
@@ -21,33 +19,49 @@ const MouseTrail = () => {
     };
   }, []);
 
+  const getGradientColors = (index) => {
+    // Define a range of blues, whites, and pinks
+    const colors = [
+      "#E0FFFF", // Light Cyan (almost white-blue)
+      "#ADD8E6", // Light Blue
+      "#87CEEB", // Sky Blue
+      "#B0E0E6", // Powder Blue
+      "#FFFFFF", // White
+      "#FFF0F5", // Lavender Blush (almost white-pink)
+      "#FFDAB9", // Peach Puff (light orange-pink) - can remove if you want strictly blue/white/pink
+      "#FFC0CB", // Pink
+      "#FF69B4", // Hot Pink
+      "#DB7093", // Pale Violet Red (deeper pink)
+    ];
+
+    // Calculate start and end indices for the gradient based on the trail index
+    const startIndex = index % colors.length;
+    const midIndex = (index + 2) % colors.length; // Shifted slightly for variety
+    const endIndex = (index + 4) % colors.length; // Shifted slightly more for variety
+
+    return `linear-gradient(45deg, ${colors[startIndex]}, ${colors[midIndex]}, ${colors[endIndex]})`;
+  };
+
   return (
     <>
       {[...Array(10)].map((_, i) => (
         <motion.div
           key={i}
-          className="fixed top-0 left-0 w-6 h-6 rounded-full pointer-events-none z-[9999]" // Removed mix-blend-screen and blur-xl for potentially brighter colors
+          className="fixed top-0 left-0 w-6 h-6 rounded-full pointer-events-none z-[9999]"
           animate={{
             x: position.x - 6,
             y: position.y - 6,
             scale: 1 - i * 0.07,
-            opacity: 0.9 - i * 0.07, // Slightly increased base opacity for more vivid trails
+            opacity: 0.9 - i * 0.07,
           }}
           transition={{
             duration: 0.3 + i * 0.05,
             ease: "easeOut",
           }}
           style={{
-            // Your existing colorful gradient logic
-            background: `linear-gradient(45deg,
-              hsl(${(i * 30) % 360}, 100%, 60%),
-              hsl(${(i * 60) % 360}, 100%, 60%),
-              hsl(${(i * 90) % 360}, 100%, 60%))`,
-            // Optional: Re-add mix-blend-mode if you prefer the effect,
-            // but test different values like 'lighten', 'screen', 'overlay', 'difference'
-            // mixBlendMode: 'screen',
-            // Optional: Adjust blur, or use a slightly less intense blur if you want colors to be sharper
-            // filter: 'blur(10px)', // Smaller blur value
+            // --- MODIFIED CODE START ---
+            background: getGradientColors(i),
+            // --- MODIFIED CODE END ---
           }}
         />
       ))}

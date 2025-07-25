@@ -12,7 +12,8 @@ function Navbar({ darkMode, setDarkMode }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
-  const navItems = ["home", "features", "pricing", "services", "roadmap"];
+  // const navItems = ["home", "features", "pricing", "services", "roadmap"];
+  const navItems = ["home", "features", "pricing", "services", "career"];
 
   const navLinkVariants = {
     hidden: { opacity: 0, y: 20 },

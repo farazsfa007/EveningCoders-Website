@@ -6,7 +6,9 @@ import MouseTrail from "./MouseTrail/MouseTrail";
 const Home = lazy(() => import("./Home/home"));
 const Pricing = lazy(() => import("./Pricing/pricing"));
 const Services = lazy(() => import("./Services/services"));
-const Roadmap = lazy(() => import("./Roadmap/roadmap"));
+// const Roadmap = lazy(() => import("./Roadmap/roadmap"));
+
+const CareerPage = lazy(() => import("./CareerPage/career"));
 const Footer = lazy(() => import("./Footer/footer"));
 
 function App() {
@@ -35,7 +37,8 @@ function App() {
         <Home darkMode={darkMode} setDarkMode={setDarkMode} />
         <Pricing darkMode={darkMode} setDarkMode={setDarkMode} />
         <Services darkMode={darkMode} setDarkMode={setDarkMode} />
-        <Roadmap darkMode={darkMode} setDarkMode={setDarkMode} />
+        {/* <Roadmap darkMode={darkMode} setDarkMode={setDarkMode} /> */}
+        <CareerPage darkMode={darkMode} setDarkMode={setDarkMode} />
         <Footer darkMode={darkMode} setDarkMode={setDarkMode} />
       </Suspense>
     </div>
