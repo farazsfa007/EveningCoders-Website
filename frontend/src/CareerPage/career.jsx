@@ -158,7 +158,7 @@ const CareerPage = () => {
   }
 
   return (
-    <div className="relative w-full min-h-screen dark:bg-black text-white overflow-hidden">
+    <div id='career' className="relative w-full min-h-screen dark:bg-black text-white overflow-hidden">
   <div className="w-full h-full absolute inset-0 pointer-events-none z-0">
     <div
       className="absolute inset-0 bg-[length:20px_100%] bg-[linear-gradient(to_right,rgba(0,0,0,0.05)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,rgba(255,255,255,0.1)_1px,transparent_1px)]"
