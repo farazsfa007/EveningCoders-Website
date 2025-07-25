@@ -212,7 +212,7 @@ const CareerPage = () => {
   return (
     <div
       id="career"
-      className="relative w-full min-h-screen pb-10 bg-gray-100 dark:bg-black overflow-hidden" // Changed pt-24 to pt-20, light mode background added
+      className="relative w-full min-h-screen py-14 pb-10 bg-gray-100 dark:bg-black overflow-hidden" // Changed pt-24 to pt-20, light mode background added
     >
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-0">
         <div
