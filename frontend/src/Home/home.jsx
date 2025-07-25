@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import React, { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Feature from "../Feature/feature";
 import {
   SiHtml5,
@@ -35,8 +35,28 @@ const containerVariants = {
 function Home({ darkMode, setDarkMode }) {
   const orbitRef = useRef(null);
 
+  const changingTexts = [
+    "Digital Growth",
+    "Online expansion",
+    "Web growth",
+    "Internet growth",
+  ];
+  const [currentTextIndex, setCurrentTextIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTextIndex(
+        (prevIndex) => (prevIndex + 1) % changingTexts.length
+      );
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [changingTexts.length]);
+
   useEffect(() => {
     const orbit = orbitRef.current;
+    if (!orbit) return;
+
     let angle = 0;
     const radius = 120;
     const icons = orbit.querySelectorAll(".orbit-icon");
@@ -51,12 +71,13 @@ function Home({ darkMode, setDarkMode }) {
       });
       requestAnimationFrame(animate);
     };
-    animate();
+    const animationFrameId = requestAnimationFrame(animate); // Start animation
+
+    return () => cancelAnimationFrame(animationFrameId); // Clean up animation frame
   }, []);
 
   return (
     <div className="relative min-h-screen bg-white dark:bg-black text-black dark:text-white transition-colors duration-300">
-      {/* Background grid */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <div className="w-full h-full relative">
           <div
@@ -69,7 +90,6 @@ function Home({ darkMode, setDarkMode }) {
         </div>
       </div>
 
-      {/* Hero Section */}
       <motion.section
         id="home"
         className="relative z-10 flex flex-col items-center justify-start text-center px-4 pt-40 pb-10"
@@ -84,7 +104,20 @@ function Home({ darkMode, setDarkMode }) {
             variants={fadeUp}
             custom={1}
           >
-            Explore the Possibilities of Digital Growth with Eve
+            Explore the Possibilities of{" "}
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={changingTexts[currentTextIndex]}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600"
+              >
+                {changingTexts[currentTextIndex]}
+              </motion.span>
+            </AnimatePresence>{" "}
+            with Eve
           </motion.h1>
 
           <motion.p
@@ -93,14 +126,8 @@ function Home({ darkMode, setDarkMode }) {
             custom={2}
           >
             Unleash the power of the digital world. Upgrade your business with{" "}
-            <motion.span
-              className="text-black dark:text-white font-bold inline-block"
-              animate={{ y: [0, -5, 0] }}
-              transition={{ repeat: Infinity, duration: 2 }}
-            >
-              evening coders
-            </motion.span>{" "}
-            the best web development platform.
+            <span className="font-bold">evening coders</span> the best web
+            development platform.
           </motion.p>
 
           <motion.p

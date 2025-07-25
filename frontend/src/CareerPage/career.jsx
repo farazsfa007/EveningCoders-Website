@@ -158,7 +158,8 @@ const CareerPage = () => {
   }
 
   return (
-    <div id='career' className="relative w-full min-h-screen dark:bg-black text-white overflow-hidden">
+    <div id='career' className="relative w-full min-h-screen pt-24 dark:bg-black text-white overflow-hidden">
+
   <div className="w-full h-full absolute inset-0 pointer-events-none z-0">
     <div
       className="absolute inset-0 bg-[length:20px_100%] bg-[linear-gradient(to_right,rgba(0,0,0,0.05)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,rgba(255,255,255,0.1)_1px,transparent_1px)]"
@@ -181,7 +182,7 @@ const CareerPage = () => {
           <h1 className="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
             Join Our Team
           </h1>
-          <p className="text-gray-400 mt-3 text-lg">Apply for an internship and kickstart your career with us! 🚀</p>
+          <p className="text-purple-600 animate-bounce mt-3 text-lg">Apply for an internship and kickstart your career with us! 🚀</p>
         </motion.div>
         
         <motion.form

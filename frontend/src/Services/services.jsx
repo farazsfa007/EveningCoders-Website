@@ -23,7 +23,7 @@ const services = [
         </p>
       </>
     ),
-    highlights: ["Photo generating", "Photo enhance", "Seamless Integration"],
+    highlights: [],
     icon: <FaLaptopCode className="text-4xl text-blue-600" />,
   },
   {
