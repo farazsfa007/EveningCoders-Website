@@ -37,9 +37,9 @@ function Home({ darkMode, setDarkMode }) {
 
   const changingTexts = [
     "Digital Growth",
+    "Digital Presence",
     "Online expansion",
     "Web growth",
-    "Internet growth",
   ];
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
 
