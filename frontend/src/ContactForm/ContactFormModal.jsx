@@ -31,7 +31,6 @@ function ContactFormModal({ isOpen, onClose }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     setSubmitting(true);
     try {
       await addDoc(collection(db, "contactFormSubmissions"), {
@@ -40,7 +39,7 @@ function ContactFormModal({ isOpen, onClose }) {
       });
       alert("Form submitted successfully!");
       setFormData({ name: "", email: "", mobile: "" });
-      onClose(); // Close modal
+      onClose();
     } catch (error) {
       console.error("Error submitting form:", error);
       alert("Something went wrong. Please try again later.");
@@ -59,7 +58,10 @@ function ContactFormModal({ isOpen, onClose }) {
           onClick={onClose}
         >
           <motion.div
-            className="relative bg-slate-900/96 backdrop-blur-xl mt-150 border border-slate-700 rounded-2xl p-8 w-full max-w-md text-white shadow-2xl shadow-blue-500/20"
+            className="relative mt-150 w-full max-w-md p-8 rounded-2xl border shadow-2xl
+              bg-white text-gray-900 border-gray-200 shadow-blue-200
+              dark:bg-slate-900/96 dark:text-white dark:border-slate-700 dark:shadow-blue-500/20
+              backdrop-blur-xl"
             initial={{ y: -50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 50, opacity: 0 }}
@@ -67,7 +69,7 @@ function ContactFormModal({ isOpen, onClose }) {
             onClick={(e) => e.stopPropagation()}
           >
             <button
-              className="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition-colors duration-300"
+              className="absolute top-4 right-4 text-gray-500 hover:text-red-500 dark:text-gray-400 transition-colors duration-300"
               onClick={onClose}
               aria-label="Close modal"
             >
@@ -75,10 +77,10 @@ function ContactFormModal({ isOpen, onClose }) {
             </button>
 
             <div className="text-center">
-              <h2 className="text-3xl font-bold mb-2 bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text">
+              <h2 className="text-3xl font-bold mb-2 bg-gradient-to-r from-blue-500 to-purple-600 text-transparent bg-clip-text">
                 Get in Touch
               </h2>
-              <p className="text-gray-300 text-sm mb-8">
+              <p className="text-sm text-gray-600 dark:text-gray-300 mb-8">
                 We're excited to hear from you!
               </p>
             </div>
@@ -87,7 +89,7 @@ function ContactFormModal({ isOpen, onClose }) {
               <div>
                 <label
                   htmlFor="name"
-                  className="block text-sm font-medium text-gray-300 mb-2"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
                 >
                   Full Name
                 </label>
@@ -98,14 +100,16 @@ function ContactFormModal({ isOpen, onClose }) {
                   onChange={handleChange}
                   placeholder="John Doe"
                   required
-                  className="w-full bg-slate-800/50 border border-slate-600 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300"
+                  className="w-full px-4 py-2 rounded-lg border bg-gray-100 text-gray-900 placeholder-gray-400 border-gray-300
+                  dark:bg-slate-800/50 dark:text-white dark:placeholder-gray-500 dark:border-slate-600
+                  focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
                 />
               </div>
 
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium text-gray-300 mb-2"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
                 >
                   Email Address
                 </label>
@@ -116,14 +120,16 @@ function ContactFormModal({ isOpen, onClose }) {
                   onChange={handleChange}
                   placeholder="you@example.com"
                   required
-                  className="w-full bg-slate-800/50 border border-slate-600 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300"
+                  className="w-full px-4 py-2 rounded-lg border bg-gray-100 text-gray-900 placeholder-gray-400 border-gray-300
+                  dark:bg-slate-800/50 dark:text-white dark:placeholder-gray-500 dark:border-slate-600
+                  focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
                 />
               </div>
 
               <div>
                 <label
                   htmlFor="mobile"
-                  className="block text-sm font-medium text-gray-300 mb-2"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
                 >
                   Mobile Number
                 </label>
@@ -134,7 +140,9 @@ function ContactFormModal({ isOpen, onClose }) {
                   onChange={handleChange}
                   placeholder="+91 12345 67890"
                   required
-                  className="w-full bg-slate-800/50 border border-slate-600 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300"
+                  className="w-full px-4 py-2 rounded-lg border bg-gray-100 text-gray-900 placeholder-gray-400 border-gray-300
+                  dark:bg-slate-800/50 dark:text-white dark:placeholder-gray-500 dark:border-slate-600
+                  focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
                 />
               </div>
 
