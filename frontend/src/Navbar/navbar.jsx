@@ -7,10 +7,13 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import logoImage from "../assets/logo image.jpg";
 import ContactFormModal from "../ContactForm/ContactFormModal";
+import VerifyCertificateModal from "../VerifyCertificateModal/VerifyCertificateModal";
 
 function Navbar({ darkMode, setDarkMode }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [isVerifyModalOpen, setIsVerifyModalOpen] = useState(false);
+
 
   // const navItems = ["home", "features", "pricing", "services", "roadmap"];
   const navItems = ["home", "features", "pricing", "services", "career"];
@@ -107,12 +110,16 @@ function Navbar({ darkMode, setDarkMode }) {
             whileHover={{ scale: 1.05 }}
             transition={{ type: "spring", stiffness: 300 }}
           >
-            <button className="relative w-full inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none">
+            <button
+              onClick={() => setIsVerifyModalOpen(true)}
+              className="relative w-full inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none"
+            >
               <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
               <span className="inline-flex h-full w-full items-center justify-center rounded-full bg-slate-950/80 dark:bg-gray-700/80 px-6 py-2 text-sm font-medium text-white backdrop-blur-3xl">
                 Verify Certificate
               </span>
             </button>
+
           </motion.div>
         </div>
 
@@ -183,12 +190,16 @@ function Navbar({ darkMode, setDarkMode }) {
               </motion.button>
 
               <motion.div whileHover={{ scale: 1.05 }} className="mt-4">
-                <button className="relative w-full inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none">
+                <button
+                  onClick={() => setIsVerifyModalOpen(true)}
+                  className="relative w-full inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none"
+                >
                   <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-                  <span className="inline-flex h-full w-full items-center justify-center rounded-full bg-slate-950/80 dark:bg-gray-700/80 px-8 py-2 text-base font-medium text-white backdrop-blur-3xl">
+                  <span className="inline-flex h-full w-full items-center justify-center rounded-full bg-slate-950/80 dark:bg-gray-700/80 px-6 py-2 text-sm font-medium text-white backdrop-blur-3xl">
                     Verify Certificate
                   </span>
                 </button>
+                
               </motion.div>
             </div>
           </motion.div>
@@ -199,8 +210,19 @@ function Navbar({ darkMode, setDarkMode }) {
         isOpen={isContactModalOpen}
         onClose={() => setIsContactModalOpen(false)}
       />
+
+      <VerifyCertificateModal
+        isOpen={isVerifyModalOpen}
+        onClose={() => setIsVerifyModalOpen(false)}
+        darkMode={darkMode}
+      />
+
+      
     </motion.nav>
+    
+    
   );
+  
 }
 
 export default Navbar;
