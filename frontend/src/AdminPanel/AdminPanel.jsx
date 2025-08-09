@@ -1,11 +1,21 @@
 /* eslint-disable no-unused-vars */
 import { motion } from "framer-motion";
 import { FaSignOutAlt } from "react-icons/fa";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
 
 const AdminPanel = ({ onClose }) => {
+  const handleLogout = async () => {
+    try {
+      await signOut(auth); // Sign out from Firebase
+      onClose(); // Close the admin panel modal
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
+
   return (
     <div className="fixed inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-gray-100 p-8 z-50 overflow-auto font-sans">
-      {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -15,7 +25,7 @@ const AdminPanel = ({ onClose }) => {
           Admin Dashboard
         </h1>
         <button
-          onClick={onClose}
+          onClick={handleLogout}
           className="flex items-center gap-2 px-6 py-3 bg-red-600 text-white rounded-full hover:bg-red-700 transition-all duration-300 ease-in-out font-semibold shadow-lg"
         >
           <FaSignOutAlt />
@@ -23,7 +33,6 @@ const AdminPanel = ({ onClose }) => {
         </button>
       </motion.div>
 
-      {/* Welcome Card */}
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
