@@ -34,12 +34,11 @@ const AdminPanel = ({ onClose }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form Submitted:", formData);
-    // Handle form submission logic (e.g., upload to server)
   };
 
   return (
     <div className="fixed inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-gray-100 p-8 z-50 overflow-auto font-sans">
-      {/* Header */}
+      
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -57,7 +56,6 @@ const AdminPanel = ({ onClose }) => {
         </button>
       </motion.div>
 
-      {/* Certificate Upload Form */}
       <motion.form
         onSubmit={handleSubmit}
         initial={{ opacity: 0, y: 40 }}
@@ -67,7 +65,6 @@ const AdminPanel = ({ onClose }) => {
       >
         <h2 className="text-2xl font-bold text-cyan-400 mb-4">Add Certificate</h2>
 
-        {/* Name */}
         <div>
           <label className="block mb-2 font-semibold">Name</label>
           <input
@@ -81,7 +78,6 @@ const AdminPanel = ({ onClose }) => {
           />
         </div>
 
-        {/* Domain Name */}
         <div>
           <label className="block mb-2 font-semibold">Domain Name</label>
           <input
@@ -95,7 +91,6 @@ const AdminPanel = ({ onClose }) => {
           />
         </div>
 
-        {/* Certificate Number */}
         <div>
           <label className="block mb-2 font-semibold">Certificate Number</label>
           <input
@@ -109,7 +104,6 @@ const AdminPanel = ({ onClose }) => {
           />
         </div>
 
-        {/* PDF Upload */}
         <div>
           <label className="block mb-2 font-semibold">Upload Certificate (PDF)</label>
           <div className="flex items-center gap-4">
@@ -131,7 +125,6 @@ const AdminPanel = ({ onClose }) => {
           </div>
         </div>
 
-        {/* Submit Button */}
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
