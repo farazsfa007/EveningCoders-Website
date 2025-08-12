@@ -34,7 +34,7 @@ function VerifyCertificateModal({ isOpen, onClose, darkMode }) {
       if (res.data.success) {
         setResult(res.data.data);
       } else {
-        setError("❌ Certificate not found");
+        setError("Certificate not found");
       }
     } catch (err) {
       setError(err.response?.data?.message || "Server error");
@@ -64,7 +64,6 @@ function VerifyCertificateModal({ isOpen, onClose, darkMode }) {
                   : "bg-white/90 border-gray-200 text-gray-900"
               } backdrop-blur-lg`}
           >
-            {/* Close Button */}
             <motion.button
               whileHover={{ scale: 1.1, rotate: 90 }}
               whileTap={{ scale: 0.9 }}
@@ -74,12 +73,10 @@ function VerifyCertificateModal({ isOpen, onClose, darkMode }) {
               <RxCross2 size={24} />
             </motion.button>
 
-            {/* Title */}
             <h2 className="text-2xl font-bold mb-6 text-center bg-gradient-to-r from-blue-400 to-cyan-500 bg-clip-text text-transparent">
               Verify Certificate
             </h2>
 
-            {/* Form */}
             <form onSubmit={handleVerify} className="space-y-5">
               <div>
                 <label
@@ -118,7 +115,6 @@ function VerifyCertificateModal({ isOpen, onClose, darkMode }) {
               </motion.button>
             </form>
 
-            {/* Error Message */}
             {error && (
               <motion.p
                 initial={{ opacity: 0, y: -10 }}
@@ -129,7 +125,6 @@ function VerifyCertificateModal({ isOpen, onClose, darkMode }) {
               </motion.p>
             )}
 
-            {/* Result */}
             {result && (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -137,7 +132,7 @@ function VerifyCertificateModal({ isOpen, onClose, darkMode }) {
                 className="mt-6 p-5 rounded-xl border border-green-500/50 bg-green-500/23 text-center"
               >
                 <p className="text-lg font-bold text-green-400">
-                  ✅ Certificate Verified
+                  Certificate Verified
                 </p>
                 <div className="mt-3 space-y-1">
                   <p>
@@ -150,6 +145,19 @@ function VerifyCertificateModal({ isOpen, onClose, darkMode }) {
                     <strong>Certificate Number:</strong>{" "}
                     {result.certificateNumber}
                   </p>
+
+                  {result.pdfUrl && (
+                    <p className="mt-3">
+                      <a
+                        href={result.pdfUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-400 underline hover:text-blue-500"
+                      >
+                        📄 View Certificate PDF
+                      </a>
+                    </p>
+                  )}
                 </div>
               </motion.div>
             )}
