@@ -12,7 +12,7 @@ import LoginPopup from "../LoginPopup/LoginPopup";
 
 const socialLinks = [
   { icon: FaWhatsapp, url: "https://api.whatsapp.com/message/V6NFQJ3SZEPZK1", name: "WhatsApp", color: "text-green-500" },
-  { icon: FaXTwitter, url: "https://x.com/evening_coders", name: "X (Twitter)", color: "text-black dark:text-white" },
+  { icon: FaXTwitter, url: "https://x.com/evening_codders", name: "X (Twitter)", color: "text-black dark:text-white" },
   { icon: FaInstagram, url: "https://instagram.com/evening.coders", name: "Instagram", color: "text-pink-500" },
   { icon: FaFacebookF, url: "https://www.facebook.com/share/1Du7W9RFar/?mibextid=LQQJ4d", name: "Facebook", color: "text-blue-600" },
   { icon: FaTelegramPlane, url: "https://t.me/eveningcoders", name: "Telegram", color: "text-sky-500" },
@@ -68,7 +68,12 @@ const Footer = ({ darkMode = true }) => {
         </div>
       </footer>
 
-      {showPopup && <LoginPopup onClose={() => setShowPopup(false)} />}
+      {showPopup && (
+        <LoginPopup
+          onClose={() => setShowPopup(false)}
+          darkMode={darkMode}
+        />
+      )}
     </>
   );
 };

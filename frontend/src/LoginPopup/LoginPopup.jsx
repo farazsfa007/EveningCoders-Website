@@ -36,7 +36,7 @@ const childVariants = {
   visible: { opacity: 1, y: 0 },
 };
 
-const LoginPopup = ({ onClose }) => {
+const LoginPopup = ({ onClose, darkMode }) => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [error, setError] = useState("");
@@ -143,23 +143,44 @@ const LoginPopup = ({ onClose }) => {
           initial="hidden"
           animate="visible"
           exit="exit"
-          className="relative bg-slate-800/80 border border-slate-700 rounded-2xl shadow-2xl p-8 w-full max-w-md text-white"
+          className={`relative rounded-2xl shadow-2xl p-8 w-full max-w-md 
+            ${
+              darkMode
+                ? "bg-slate-800/90 border border-slate-700 text-white"
+                : "bg-white border border-gray-300 text-gray-900"
+            }`}
         >
           <motion.button
             whileHover={{ scale: 1.1, rotate: 90 }}
             whileTap={{ scale: 0.9 }}
             onClick={onClose}
-            className="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors"
+            className={`absolute top-4 right-4 transition-colors 
+              ${
+                darkMode
+                  ? "text-slate-400 hover:text-white"
+                  : "text-gray-500 hover:text-red-500"
+              }`}
             aria-label="Close"
           >
             <FaTimes size={22} />
           </motion.button>
 
           <motion.div variants={childVariants} className="text-center mb-8">
-            <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-indigo-500 text-transparent bg-clip-text">
+            <h2
+              className={`text-3xl font-bold 
+              ${
+                darkMode
+                  ? "bg-gradient-to-r from-purple-400 to-indigo-500 text-transparent bg-clip-text"
+                  : "text-indigo-700"
+              }`}
+            >
               Admin Access
             </h2>
-            <p className="text-slate-400 mt-1">
+            <p
+              className={`${
+                darkMode ? "text-slate-400" : "text-gray-600"
+              } mt-1`}
+            >
               Please log in with your admin email
             </p>
           </motion.div>
@@ -167,7 +188,8 @@ const LoginPopup = ({ onClose }) => {
           <form onSubmit={handleLogin} className="space-y-6">
             <motion.div variants={childVariants} className="relative">
               <FaUser
-                className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
+                className={`absolute left-3.5 top-1/2 -translate-y-1/2 
+                  ${darkMode ? "text-slate-400" : "text-gray-400"}`}
                 size={18}
               />
               <input
@@ -177,14 +199,20 @@ const LoginPopup = ({ onClose }) => {
                 value={formData.email}
                 onChange={handleChange}
                 disabled={loading}
-                className="w-full pl-10 pr-3 py-3 bg-slate-900/50 border border-slate-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all"
+                className={`w-full pl-10 pr-3 py-3 rounded-lg focus:ring-2 transition-all 
+                  ${
+                    darkMode
+                      ? "bg-slate-900/50 border border-slate-700 text-white placeholder-gray-400 focus:ring-indigo-500"
+                      : "bg-gray-100 border border-gray-300 text-gray-900 placeholder-gray-400 focus:ring-indigo-400"
+                  }`}
                 required
               />
             </motion.div>
 
             <motion.div variants={childVariants} className="relative">
               <FaLock
-                className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
+                className={`absolute left-3.5 top-1/2 -translate-y-1/2 
+                  ${darkMode ? "text-slate-400" : "text-gray-400"}`}
                 size={18}
               />
               <input
@@ -194,7 +222,12 @@ const LoginPopup = ({ onClose }) => {
                 value={formData.password}
                 onChange={handleChange}
                 disabled={loading}
-                className="w-full pl-10 pr-3 py-3 bg-slate-900/50 border border-slate-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all"
+                className={`w-full pl-10 pr-3 py-3 rounded-lg focus:ring-2 transition-all 
+                  ${
+                    darkMode
+                      ? "bg-slate-900/50 border border-slate-700 text-white placeholder-gray-400 focus:ring-indigo-500"
+                      : "bg-gray-100 border border-gray-300 text-gray-900 placeholder-gray-400 focus:ring-indigo-400"
+                  }`}
                 required
               />
             </motion.div>
@@ -203,7 +236,7 @@ const LoginPopup = ({ onClose }) => {
               <motion.p
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="text-red-400 text-sm text-center"
+                className="text-red-500 text-sm text-center"
               >
                 {error}
               </motion.p>
@@ -217,7 +250,12 @@ const LoginPopup = ({ onClose }) => {
                 type="button"
                 onClick={onClose}
                 disabled={loading}
-                className="w-full px-4 py-3 bg-slate-700/50 text-slate-300 font-semibold rounded-lg hover:bg-slate-700 transition-colors"
+                className={`w-full px-4 py-3 font-semibold rounded-lg transition-colors
+                  ${
+                    darkMode
+                      ? "bg-slate-700/50 text-slate-300 hover:bg-slate-700"
+                      : "bg-gray-200 text-gray-600 hover:bg-gray-300"
+                  }`}
               >
                 Cancel
               </button>
@@ -226,7 +264,12 @@ const LoginPopup = ({ onClose }) => {
                 whileTap={{ scale: 0.95 }}
                 type="submit"
                 disabled={loading}
-                className="w-full px-4 py-3 bg-indigo-600 text-white font-semibold rounded-lg shadow-lg hover:bg-indigo-700 transition-all focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75"
+                className={`w-full px-4 py-3 font-semibold rounded-lg shadow-lg transition-all focus:outline-none focus:ring-2
+                  ${
+                    darkMode
+                      ? "bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-400"
+                      : "bg-indigo-500 text-white hover:bg-indigo-600 focus:ring-indigo-300"
+                  }`}
               >
                 {loading ? "Logging in..." : "Login"}
               </motion.button>
