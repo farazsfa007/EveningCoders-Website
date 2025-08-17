@@ -175,7 +175,7 @@ const AdminPanel = ({ onClose }) => {
               : "bg-gray-700 text-gray-300 hover:bg-gray-600"
           }`}
         >
-          Under Process User
+          Pending Request
         </button>
         <button
           onClick={() => setActiveTab("tab3")}
@@ -185,7 +185,7 @@ const AdminPanel = ({ onClose }) => {
               : "bg-gray-700 text-gray-300 hover:bg-gray-600"
           }`}
         >
-          Existing User
+          Approved Request
         </button>
         <button
           onClick={() => setActiveTab("tab4")}
@@ -195,7 +195,7 @@ const AdminPanel = ({ onClose }) => {
               : "bg-gray-700 text-gray-300 hover:bg-gray-600"
           }`}
         >
-          Rejected User
+          Deleted Request
         </button>
       </div>
 
