@@ -14,7 +14,6 @@ import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
 import axios from "axios";
 
-// Framer Motion Variants for animations
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -45,13 +44,12 @@ const AdminPanel = ({ onClose }) => {
   const [loadingCertificates, setLoadingCertificates] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Fetch all certificates
   const fetchCertificates = async () => {
     try {
       setLoadingCertificates(true);
       const res = await axios.get(API_URL_GET);
       if (res.data.success) {
-        setCertificates(res.data.data.reverse()); // Show newest first
+        setCertificates(res.data.data.reverse());
       }
     } catch (error) {
       console.error("Error fetching certificates:", error);
@@ -105,7 +103,7 @@ const AdminPanel = ({ onClose }) => {
       if (res.data.success) {
         setMessage({ type: "success", text: "Certificate added successfully!" });
         setFormData({ name: "", domain: "", certificateNumber: "", pdf: null });
-        document.getElementById("pdf-upload-form").reset(); // Reset file input
+        document.getElementById("pdf-upload-form").reset();
         fetchCertificates(); // Refresh list
       } else {
         setMessage({
@@ -121,7 +119,7 @@ const AdminPanel = ({ onClose }) => {
       });
     } finally {
       setLoading(false);
-      setTimeout(() => setMessage({ type: "", text: "" }), 5000); // Clear message after 5s
+      setTimeout(() => setMessage({ type: "", text: "" }), 5000); 
     }
   };
 
@@ -155,7 +153,7 @@ const AdminPanel = ({ onClose }) => {
       </motion.header>
 
       <div>
-         <motion.div 
+        <motion.div
   variants={itemVariants}
   className="p-5 bg-slate-900/50 rounded-xl shadow-lg border border-slate-700 mb-5"
 >
