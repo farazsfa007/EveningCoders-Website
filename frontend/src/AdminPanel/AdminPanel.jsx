@@ -9,20 +9,30 @@ import {
   FaHashtag,
   FaSearch,
   FaFilePdf,
+  FaCheckCircle,
+  FaTimesCircle,
+  FaEnvelope,
+  FaPhone,
+  FaUniversity,
+  FaGraduationCap,
 } from "react-icons/fa";
 import { signOut } from "firebase/auth";
-import { auth } from "../firebase";
+import { db, auth } from "../firebase";
+import {
+  collection,
+  getDocs,
+  updateDoc,
+  doc,
+  query,
+  where,
+  orderBy,
+} from "firebase/firestore";
 import axios from "axios";
-
 
 const containerVariants = {
   hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1 },
-  },
+  visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
 };
-
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0 },
@@ -31,8 +41,7 @@ const itemVariants = {
 const AdminPanel = ({ onClose }) => {
   const API_URL_ADD = "http://localhost:3000/api/add-certificate";
   const API_URL_GET = "http://localhost:3000/api/get-certificates";
-
-  const [activeTab, setActiveTab] = useState("certificates"); // 👈 New state for tab switching
+  const [activeTab, setActiveTab] = useState("certificates");
 
   const [formData, setFormData] = useState({
     name: "",
@@ -40,32 +49,45 @@ const AdminPanel = ({ onClose }) => {
     certificateNumber: "",
     pdf: null,
   });
-
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState({ type: "", text: "" });
   const [certificates, setCertificates] = useState([]);
   const [loadingCertificates, setLoadingCertificates] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const fetchCertificates = async () => {
+  const [apps, setApps] = useState([]);
+  const [loadingApps, setLoadingApps] = useState(false);
+  const [appsMessage, setAppsMessage] = useState("");
+
+  // Fetch Internship applications from Firestore
+  const fetchApplications = async () => {
+    setLoadingApps(true);
     try {
-      setLoadingCertificates(true);
-      const res = await axios.get(API_URL_GET);
-      if (res.data.success) {
-        setCertificates(res.data.data.reverse());
-      }
-    } catch (error) {
-      console.error("Error fetching certificates:", error);
-      setMessage({ type: "error", text: "Could not load certificates." });
-    } finally {
-      setLoadingCertificates(false);
+      // Fetch all, sorted by submission time if available
+      const q = query(
+        collection(db, "internshipApplications"),
+        orderBy("submittedAt", "desc")
+      );
+      const snapshot = await getDocs(q);
+      const applications = snapshot.docs.map((docSnap) => ({
+        id: docSnap.id,
+        ...docSnap.data(),
+      }));
+      setApps(applications);
+    } catch (err) {
+      setAppsMessage("Failed to fetch applications.");
+      console.error(err);
     }
+    setLoadingApps(false);
   };
 
   useEffect(() => {
     fetchCertificates();
+    fetchApplications();
+    // eslint-disable-next-line
   }, []);
 
+  // Logout
   const handleLogout = async () => {
     try {
       await signOut(auth);
@@ -75,13 +97,11 @@ const AdminPanel = ({ onClose }) => {
     }
   };
 
+  // Certificate Logic
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    if (files) {
-      setFormData({ ...formData, [name]: files[0] });
-    } else {
-      setFormData({ ...formData, [name]: value });
-    }
+    if (files) setFormData({ ...formData, [name]: files[0] });
+    else setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = async (e) => {
@@ -104,10 +124,13 @@ const AdminPanel = ({ onClose }) => {
       });
 
       if (res.data.success) {
-        setMessage({ type: "success", text: "Certificate added successfully!" });
+        setMessage({
+          type: "success",
+          text: "Certificate added successfully!",
+        });
         setFormData({ name: "", domain: "", certificateNumber: "", pdf: null });
         document.getElementById("pdf-upload-form").reset();
-        fetchCertificates(); // Refresh list
+        fetchCertificates();
       } else {
         setMessage({
           type: "error",
@@ -126,6 +149,19 @@ const AdminPanel = ({ onClose }) => {
     }
   };
 
+  const fetchCertificates = async () => {
+    try {
+      setLoadingCertificates(true);
+      const res = await axios.get(API_URL_GET);
+      if (res.data.success) setCertificates(res.data.data.reverse());
+    } catch (error) {
+      console.error("Error fetching certificates:", error);
+      setMessage({ type: "error", text: "Could not load certificates." });
+    } finally {
+      setLoadingCertificates(false);
+    }
+  };
+
   const filteredCertificates = certificates.filter(
     (cert) =>
       cert.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -133,9 +169,102 @@ const AdminPanel = ({ onClose }) => {
       cert.certificateNumber.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const approveApplication = async (id) => {
+    try {
+      await updateDoc(doc(db, "internshipApplications", id), {
+        status: "approved",
+      });
+      setAppsMessage("Request approved!");
+      fetchApplications();
+    } catch (err) {
+      setAppsMessage("Approval failed! Try again.");
+      console.error(err);
+    }
+    setTimeout(() => setAppsMessage(""), 3000);
+  };
+
+  const rejectApplication = async (id) => {
+    try {
+      await updateDoc(doc(db, "internshipApplications", id), {
+        status: "deleted",
+      });
+      setAppsMessage("Request rejected.");
+      fetchApplications();
+    } catch (err) {
+      setAppsMessage("Rejection failed! Try again.");
+      console.error(err);
+    }
+    setTimeout(() => setAppsMessage(""), 3000);
+  };
+
+  const getByStatus = (status) =>
+    apps.filter((app) =>
+      status === "pending"
+        ? !app.status || app.status === "pending"
+        : app.status === status
+    );
+
+  // Application card
+  function ApplicationCard({ app, showActions }) {
+    return (
+      <motion.div
+        layout
+        initial={{ opacity: 0, y: 40, scale: 0.9 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        exit={{
+          opacity: 0,
+          x: -50,
+          transition: { duration: 0.3 },
+        }}
+        className="bg-gray-800/80 border-l-4 border-cyan-500 p-4 rounded-lg mb-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
+      >
+        <div className="flex-1 grid grid-cols-2 md:grid-cols-3 gap-2">
+          <div>
+            <FaUser className="inline mr-1" /> {app.fullName}
+          </div>
+          <div>
+            <FaEnvelope className="inline mr-1" /> {app.email}
+          </div>
+          <div>
+            <FaPhone className="inline mr-1" /> {app.contactNumber}
+          </div>
+          <div>
+            <FaUniversity className="inline mr-1" /> {app.collegeName}
+          </div>
+          <div>
+            <FaGraduationCap className="inline mr-1" />
+            {app.qualification} - {app.year}
+            {app.passingYear && <> ({app.passingYear})</>}
+          </div>
+          <div>
+            <span className="font-bold mr-1">Skills:</span>
+            {app.skills && app.skills.join(", ")}
+          </div>
+        </div>
+        {showActions && (
+          <div className="flex flex-col gap-2 mt-2 sm:mt-0">
+            <button
+              onClick={() => approveApplication(app.id)}
+              className="flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md"
+              title="Approve"
+            >
+              <FaCheckCircle /> Approve
+            </button>
+            <button
+              onClick={() => rejectApplication(app.id)}
+              className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md"
+              title="Reject"
+            >
+              <FaTimesCircle /> Reject
+            </button>
+          </div>
+        )}
+      </motion.div>
+    );
+  }
+
   return (
     <div className="fixed inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-gray-100 p-8 z-50 overflow-auto font-sans">
-      {/* Header */}
       <motion.header
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -155,7 +284,6 @@ const AdminPanel = ({ onClose }) => {
         </motion.button>
       </motion.header>
 
-      {/* BUTTONS */}
       <div className="flex gap-4 mb-8">
         <button
           onClick={() => setActiveTab("certificates")}
@@ -199,11 +327,9 @@ const AdminPanel = ({ onClose }) => {
         </button>
       </div>
 
-      {/* === Conditional Rendering === */}
       {activeTab === "certificates" && (
         <>
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
-            {/* Left Column: Form */}
             <motion.div
               variants={containerVariants}
               initial="hidden"
@@ -218,7 +344,6 @@ const AdminPanel = ({ onClose }) => {
                 <h2 className="text-2xl font-bold text-cyan-300 mb-4">
                   Add New Certificate
                 </h2>
-
                 {message.text && (
                   <p
                     className={`p-3 rounded-lg text-sm font-medium ${
@@ -230,8 +355,6 @@ const AdminPanel = ({ onClose }) => {
                     {message.text}
                   </p>
                 )}
-
-                {/* Input Fields */}
                 {[
                   {
                     name: "name",
@@ -272,7 +395,6 @@ const AdminPanel = ({ onClose }) => {
                   </motion.div>
                 ))}
 
-                {/* File Upload */}
                 <motion.div variants={itemVariants}>
                   <label className="block mb-2 font-semibold text-gray-300">
                     Upload Certificate PDF
@@ -297,7 +419,6 @@ const AdminPanel = ({ onClose }) => {
                     )}
                   </div>
                 </motion.div>
-
                 <motion.button
                   whileHover={{
                     scale: 1.02,
@@ -313,7 +434,6 @@ const AdminPanel = ({ onClose }) => {
               </form>
             </motion.div>
 
-            {/* Right Column: Certificate List */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, transition: { delay: 0.3 } }}
@@ -336,7 +456,6 @@ const AdminPanel = ({ onClose }) => {
                   </div>
                 </div>
               </div>
-
               <div className="max-h-[65vh] overflow-y-auto pr-2">
                 {loadingCertificates ? (
                   <p className="text-center text-gray-400 p-8">
@@ -398,13 +517,95 @@ const AdminPanel = ({ onClose }) => {
       )}
 
       {activeTab === "tab2" && (
-        <p className="text-center text-gray-400">🚧 Under Process List (Coming Soon)</p>
+        <div>
+          <h2 className="text-2xl font-bold text-cyan-300 mb-4 text-center">
+            Pending Request
+          </h2>
+          {appsMessage && (
+            <p className="text-center mb-2 text-green-400">{appsMessage}</p>
+          )}
+          {loadingApps ? (
+            <p className="text-center text-gray-400 p-8">Loading...</p>
+          ) : (
+            <div className="max-w-3xl mx-auto">
+              {getByStatus("pending").length === 0 ? (
+                <p className="text-center text-gray-400">
+                  No pending requests.
+                </p>
+              ) : (
+                <AnimatePresence>
+                  {getByStatus("pending").map((app) => (
+                    <ApplicationCard key={app.id} app={app} showActions />
+                  ))}
+                </AnimatePresence>
+              )}
+            </div>
+          )}
+        </div>
       )}
+
       {activeTab === "tab3" && (
-        <p className="text-center text-gray-400">🚧 Existing User List (Coming Soon)</p>
+        <div>
+          <h2 className="text-2xl font-bold text-cyan-300 mb-4 text-center">
+            Approved Request
+          </h2>
+          {appsMessage && (
+            <p className="text-center mb-2 text-green-400">{appsMessage}</p>
+          )}
+          {loadingApps ? (
+            <p className="text-center text-gray-400 p-8">Loading...</p>
+          ) : (
+            <div className="max-w-3xl mx-auto">
+              {getByStatus("approved").length === 0 ? (
+                <p className="text-center text-gray-400">
+                  No approved requests.
+                </p>
+              ) : (
+                <AnimatePresence>
+                  {getByStatus("approved").map((app) => (
+                    <ApplicationCard
+                      key={app.id}
+                      app={app}
+                      showActions={false}
+                    />
+                  ))}
+                </AnimatePresence>
+              )}
+            </div>
+          )}
+        </div>
       )}
+
       {activeTab === "tab4" && (
-        <p className="text-center text-gray-400">🚧 Rejected User List (Coming Soon)</p>
+        <div>
+          <h2 className="text-2xl font-bold text-cyan-300 mb-4 text-center">
+            Deleted Request
+          </h2>
+          {appsMessage && (
+            <p className="text-center mb-2 text-red-300">{appsMessage}</p>
+          )}
+          {loadingApps ? (
+            <p className="text-center text-gray-400 p-8">Loading...</p>
+          ) : (
+            <div className="max-w-3xl mx-auto">
+              {getByStatus("deleted").length === 0 ? (
+                <p className="text-center text-gray-400">
+                  No rejected requests.
+                </p>
+              ) : (
+                <AnimatePresence>
+                  {getByStatus("deleted").map((app) => (
+                    <ApplicationCard
+                      key={app.id}
+                      app={app}
+                      showActions={false}
+                    />
+                  ))}
+                </AnimatePresence>
+              )}
+            </div>
+          )}
+        </div>
       )}
     </div>
   );

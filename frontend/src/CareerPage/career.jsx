@@ -23,6 +23,16 @@ const skillTagColors = [
   "bg-yellow-500",
 ];
 
+const initialFormData = {
+  fullName: "",
+  email: "",
+  contactNumber: "",
+  collegeName: "",
+  qualification: "",
+  year: "",
+  passingYear: "",
+};
+
 const FormField = ({ children, className = "" }) => (
   <motion.div
     className={`mb-4 ${className}`}
@@ -36,16 +46,7 @@ const FormField = ({ children, className = "" }) => (
 );
 
 const CareerPage = () => {
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    contactNumber: "",
-    collegeName: "",
-    qualification: "",
-    year: "",
-    passingYear: "",
-  });
-
+  const [formData, setFormData] = useState({ ...initialFormData });
   const [skills, setSkills] = useState([]);
   const [currentSkill, setCurrentSkill] = useState("");
   const [yearOptions, setYearOptions] = useState([]);
@@ -136,6 +137,13 @@ const CareerPage = () => {
     return Object.keys(tempErrors).length === 0;
   };
 
+  const resetForm = () => {
+    setFormData({ ...initialFormData });
+    setSkills([]);
+    setCurrentSkill("");
+    setErrors({});
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -153,6 +161,7 @@ const CareerPage = () => {
     try {
       await addDoc(collection(db, "internshipApplications"), submissionData);
       console.log("Form Submitted to Firestore:", submissionData);
+      resetForm(); 
       setIsSubmitted(true);
     } catch (error) {
       console.error("Error submitting to Firestore:", error);
@@ -162,6 +171,7 @@ const CareerPage = () => {
 
   const handlePopupClose = () => {
     setIsSubmitted(false);
+    resetForm(); 
   };
 
   const inputStyle =
@@ -212,7 +222,7 @@ const CareerPage = () => {
   return (
     <div
       id="career"
-      className="relative w-full min-h-screen py-14 pb-10 bg-gray-100 dark:bg-black overflow-hidden" // Changed pt-24 to pt-20, light mode background added
+      className="relative w-full min-h-screen py-14 pb-10 bg-gray-100 dark:bg-black overflow-hidden"
     >
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-0">
         <div
@@ -226,7 +236,6 @@ const CareerPage = () => {
 
       <div className="relative z-10 flex items-center justify-center px-4">
         <div className="w-full max-w-4xl mx-auto min-h-[80vh]">
-          {" "}
           <motion.div
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
@@ -237,7 +246,6 @@ const CareerPage = () => {
               Join Our Team
             </h1>
             <p className="text-purple-700 animate-bounce mt-2 text-base dark:text-purple-400">
-              {" "}
               Apply for an internship and kickstart your career! 🚀
             </p>
           </motion.div>
@@ -250,7 +258,6 @@ const CareerPage = () => {
             noValidate
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
-              {" "}
               <FormField>
                 <label htmlFor="fullName" className={labelStyle}>
                   Full Name
@@ -443,22 +450,17 @@ const CareerPage = () => {
             </motion.div>
           </motion.form>
         </div>
-        
       </div>
       <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-              className="mt-10 text-center text-sm md:text-base leading-relaxed"
-            >
-              <p className="max-w-2xl mx-auto bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 bg-clip-text text-transparent dark:from-blue-400 dark:via-purple-400 dark:to-pink-400">
-                Join our team of passionate innovators and shape the future with
-                us. At our company, we value creativity, collaboration, and
-                continuous growth. Explore exciting career opportunities,
-                develop your skills, and make a real impact. Start your journey
-                today and become part of something extraordinary.
-              </p>
-            </motion.div>
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2, duration: 0.6 }}
+        className="mt-10 text-center text-sm md:text-base leading-relaxed"
+      >
+        <p className="max-w-2xl mx-auto bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 bg-clip-text text-transparent dark:from-blue-400 dark:via-purple-400 dark:to-pink-400">
+          Join our team of passionate innovators and shape the future with us. At our company, we value creativity, collaboration, and continuous growth. Explore exciting career opportunities, develop your skills, and make a real impact. Start your journey today and become part of something extraordinary.
+        </p>
+      </motion.div>
     </div>
   );
 };
