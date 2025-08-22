@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { FaUser, FaLock, FaTimes } from "react-icons/fa";
+import { motion } from "framer-motion";
+import { FaUser, FaLock } from "react-icons/fa";
 import AdminPanel from "../AdminPanel/AdminPanel";
 
 // Firebase imports
@@ -15,28 +15,12 @@ import {
 import { auth, db } from "../firebase";
 import { doc, getDoc } from "firebase/firestore";
 
-const modalVariants = {
-  hidden: { opacity: 0, scale: 0.95, y: 50 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    y: 0,
-    transition: {
-      type: "spring",
-      damping: 20,
-      stiffness: 260,
-      staggerChildren: 0.1,
-    },
-  },
-  exit: { opacity: 0, scale: 0.9, y: 50, transition: { duration: 0.2 } },
-};
-
 const childVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0 },
 };
 
-const LoginPopup = ({ onClose, darkMode }) => {
+const LoginPopup = ({ darkMode }) => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [error, setError] = useState("");
@@ -132,152 +116,121 @@ const LoginPopup = ({ onClose, darkMode }) => {
   }
 
   if (isLoggedIn) {
-    return <AdminPanel onClose={onClose} onLogout={handleLogout} />;
+    return <AdminPanel onLogout={handleLogout} />;
   }
 
   return (
-    <AnimatePresence>
-      <div className="fixed inset-0 bg-black/60 backdrop-blur-xs flex justify-center items-center z-50 p-4">
-        <motion.div
-          variants={modalVariants}
-          initial="hidden"
-          animate="visible"
-          exit="exit"
-          className={`relative rounded-2xl shadow-2xl p-8 w-full max-w-md 
+    <div className="min-h-screen flex justify-center items-center p-6">
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        className={`rounded-2xl shadow-2xl p-8 w-full max-w-md 
+          ${
+            darkMode
+              ? "bg-slate-800/90 border border-slate-700 text-white"
+              : "bg-white border border-gray-300 text-gray-900"
+          }`}
+      >
+        <motion.div variants={childVariants} className="text-center mb-8">
+          <h2
+            className={`text-3xl font-bold 
             ${
               darkMode
-                ? "bg-slate-800/90 border border-slate-700 text-white"
-                : "bg-white border border-gray-300 text-gray-900"
+                ? "bg-gradient-to-r from-purple-400 to-indigo-500 text-transparent bg-clip-text"
+                : "text-indigo-700"
             }`}
-        >
-          <motion.button
-            whileHover={{ scale: 1.1, rotate: 90 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={onClose}
-            className={`absolute top-4 right-4 transition-colors 
-              ${
-                darkMode
-                  ? "text-slate-400 hover:text-white"
-                  : "text-gray-500 hover:text-red-500"
-              }`}
-            aria-label="Close"
           >
-            <FaTimes size={22} />
-          </motion.button>
+            Admin Access
+          </h2>
+          <p
+            className={`${
+              darkMode ? "text-slate-400" : "text-gray-600"
+            } mt-1`}
+          >
+            Please log in with your admin email
+          </p>
+        </motion.div>
 
-          <motion.div variants={childVariants} className="text-center mb-8">
-            <h2
-              className={`text-3xl font-bold 
-              ${
-                darkMode
-                  ? "bg-gradient-to-r from-purple-400 to-indigo-500 text-transparent bg-clip-text"
-                  : "text-indigo-700"
-              }`}
-            >
-              Admin Access
-            </h2>
-            <p
-              className={`${
-                darkMode ? "text-slate-400" : "text-gray-600"
-              } mt-1`}
-            >
-              Please log in with your admin email
-            </p>
+        <form onSubmit={handleLogin} className="space-y-6">
+          <motion.div variants={childVariants} className="relative">
+            <FaUser
+              className={`absolute left-3.5 top-1/2 -translate-y-1/2 
+                ${darkMode ? "text-slate-400" : "text-gray-400"}`}
+              size={18}
+            />
+            <input
+              type="email"
+              name="email"
+              placeholder="Admin email"
+              value={formData.email}
+              onChange={handleChange}
+              disabled={loading}
+              className={`w-full pl-10 pr-3 py-3 rounded-lg focus:ring-2 transition-all 
+                ${
+                  darkMode
+                    ? "bg-slate-900/50 border border-slate-700 text-white placeholder-gray-400 focus:ring-indigo-500"
+                    : "bg-gray-100 border border-gray-300 text-gray-900 placeholder-gray-400 focus:ring-indigo-400"
+                }`}
+              required
+            />
           </motion.div>
 
-          <form onSubmit={handleLogin} className="space-y-6">
-            <motion.div variants={childVariants} className="relative">
-              <FaUser
-                className={`absolute left-3.5 top-1/2 -translate-y-1/2 
-                  ${darkMode ? "text-slate-400" : "text-gray-400"}`}
-                size={18}
-              />
-              <input
-                type="email"
-                name="email"
-                placeholder="Admin email"
-                value={formData.email}
-                onChange={handleChange}
-                disabled={loading}
-                className={`w-full pl-10 pr-3 py-3 rounded-lg focus:ring-2 transition-all 
-                  ${
-                    darkMode
-                      ? "bg-slate-900/50 border border-slate-700 text-white placeholder-gray-400 focus:ring-indigo-500"
-                      : "bg-gray-100 border border-gray-300 text-gray-900 placeholder-gray-400 focus:ring-indigo-400"
-                  }`}
-                required
-              />
-            </motion.div>
+          <motion.div variants={childVariants} className="relative">
+            <FaLock
+              className={`absolute left-3.5 top-1/2 -translate-y-1/2 
+                ${darkMode ? "text-slate-400" : "text-gray-400"}`}
+              size={18}
+            />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={formData.password}
+              onChange={handleChange}
+              disabled={loading}
+              className={`w-full pl-10 pr-3 py-3 rounded-lg focus:ring-2 transition-all 
+                ${
+                  darkMode
+                    ? "bg-slate-900/50 border border-slate-700 text-white placeholder-gray-400 focus:ring-indigo-500"
+                    : "bg-gray-100 border border-gray-300 text-gray-900 placeholder-gray-400 focus:ring-indigo-400"
+                }`}
+              required
+            />
+          </motion.div>
 
-            <motion.div variants={childVariants} className="relative">
-              <FaLock
-                className={`absolute left-3.5 top-1/2 -translate-y-1/2 
-                  ${darkMode ? "text-slate-400" : "text-gray-400"}`}
-                size={18}
-              />
-              <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                value={formData.password}
-                onChange={handleChange}
-                disabled={loading}
-                className={`w-full pl-10 pr-3 py-3 rounded-lg focus:ring-2 transition-all 
-                  ${
-                    darkMode
-                      ? "bg-slate-900/50 border border-slate-700 text-white placeholder-gray-400 focus:ring-indigo-500"
-                      : "bg-gray-100 border border-gray-300 text-gray-900 placeholder-gray-400 focus:ring-indigo-400"
-                  }`}
-                required
-              />
-            </motion.div>
-
-            {error && (
-              <motion.p
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="text-red-500 text-sm text-center"
-              >
-                {error}
-              </motion.p>
-            )}
-
-            <motion.div
-              variants={childVariants}
-              className="flex flex-col sm:flex-row gap-4 pt-4"
+          {error && (
+            <motion.p
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-red-500 text-sm text-center"
             >
-              <button
-                type="button"
-                onClick={onClose}
-                disabled={loading}
-                className={`w-full px-4 py-3 font-semibold rounded-lg transition-colors
-                  ${
-                    darkMode
-                      ? "bg-slate-700/50 text-slate-300 hover:bg-slate-700"
-                      : "bg-gray-200 text-gray-600 hover:bg-gray-300"
-                  }`}
-              >
-                Cancel
-              </button>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                type="submit"
-                disabled={loading}
-                className={`w-full px-4 py-3 font-semibold rounded-lg shadow-lg transition-all focus:outline-none focus:ring-2
-                  ${
-                    darkMode
-                      ? "bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-400"
-                      : "bg-indigo-500 text-white hover:bg-indigo-600 focus:ring-indigo-300"
-                  }`}
-              >
-                {loading ? "Logging in..." : "Login"}
-              </motion.button>
-            </motion.div>
-          </form>
-        </motion.div>
-      </div>
-    </AnimatePresence>
+              {error}
+            </motion.p>
+          )}
+
+          <motion.div
+            variants={childVariants}
+            className="flex flex-col sm:flex-row gap-4 pt-4"
+          >
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              type="submit"
+              disabled={loading}
+              className={`w-full px-4 py-3 font-semibold rounded-lg shadow-lg transition-all focus:outline-none focus:ring-2
+                ${
+                  darkMode
+                    ? "bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-400"
+                    : "bg-indigo-500 text-white hover:bg-indigo-600 focus:ring-indigo-300"
+                }`}
+            >
+              {loading ? "Logging in..." : "Login"}
+            </motion.button>
+          </motion.div>
+        </form>
+      </motion.div>
+    </div>
   );
 };
 

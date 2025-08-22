@@ -84,7 +84,6 @@ const AdminPanel = ({ onClose }) => {
   useEffect(() => {
     fetchCertificates();
     fetchApplications();
-    // eslint-disable-next-line
   }, []);
 
   // Logout
@@ -264,7 +263,7 @@ const AdminPanel = ({ onClose }) => {
   }
 
   return (
-    <div className="fixed inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-gray-100 p-8 z-50 overflow-auto font-sans">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-gray-100 p-8 overflow-auto font-sans">
       <motion.header
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -527,7 +526,7 @@ const AdminPanel = ({ onClose }) => {
           {loadingApps ? (
             <p className="text-center text-gray-400 p-8">Loading...</p>
           ) : (
-            <div className="max-w-3xl mx-auto">
+            <div className="w-full mx-auto">
               {getByStatus("pending").length === 0 ? (
                 <p className="text-center text-gray-400">
                   No pending requests.
@@ -555,7 +554,7 @@ const AdminPanel = ({ onClose }) => {
           {loadingApps ? (
             <p className="text-center text-gray-400 p-8">Loading...</p>
           ) : (
-            <div className="max-w-3xl mx-auto">
+            <div className="w-full mx-auto">
               {getByStatus("approved").length === 0 ? (
                 <p className="text-center text-gray-400">
                   No approved requests.
@@ -587,7 +586,7 @@ const AdminPanel = ({ onClose }) => {
           {loadingApps ? (
             <p className="text-center text-gray-400 p-8">Loading...</p>
           ) : (
-            <div className="max-w-3xl mx-auto">
+            <div className="w-full mx-auto">
               {getByStatus("deleted").length === 0 ? (
                 <p className="text-center text-gray-400">
                   No rejected requests.
